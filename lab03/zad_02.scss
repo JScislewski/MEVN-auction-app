@@ -1,0 +1,39 @@
+.container {
+  display: grid;
+  grid-gap: 5px;
+  grid-template-columns: auto auto auto auto auto;
+}
+@for $i from 1 through 30 {
+}
+.item {
+  border: solid 1px black;
+  background-color: palegoldenrod;
+  text-align: center;
+  padding: 5px;
+}
+.item9 {
+  grid-column-start: 4;
+  grid-column-end: 6;
+  background-color: red;
+}
+.item11 {
+  grid-column-start: 2;
+  grid-column-end: 3;
+  grid-row-start: 3;
+  grid-row-end: 7;
+  background-color: lightblue;
+}
+.item16 {
+  grid-column-start: 3;
+  grid-column-end: 5;
+  grid-row-start: 4;
+  grid-row-end: 6;
+  background-color: turquoise;
+}
+.item19 {
+  grid-column-start: 1;
+  grid-column-end: 5;
+  grid-row-start: 8;
+  grid-row-end: 9;
+  background-color: crimson;
+}

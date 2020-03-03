@@ -1,0 +1,14 @@
+.container {
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    grid-template-rows: 100px 100px;
+    grid-template-areas: 
+      "e h h h e"
+      "e m s a e"
+      "e f f f e";
+  }
+  header {
+    grid-column-start: 2;
+    grid-column-end: 5;
+    background-color: red;
+  }
