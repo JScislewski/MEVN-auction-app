@@ -23,24 +23,32 @@ const zadanie3 = () => {
   button.innerHTML = "KUP TERAZ";
 };
 const zadanie4 = () => {
-  console.log(
-    document
-      .getElementById("basic-plan")
-      .getElementsByClassName("list-unstyled")[0].firstElementChild
-  );
   var newBasicCapacity =
     document
       .getElementById("basic-plan")
       .getElementsByClassName("list-unstyled")[0]
-      .firstElementChild.innerHTML.split(" ")[1] * 1.25;
+      .firstElementChild.textContent.split(" ")[1] * 1.25;
   document
     .getElementById("basic-plan")
     .getElementsByClassName(
       "list-unstyled"
-    )[0].firstElementChild.innerHTML = document
+    )[0].firstElementChild.textContent = document
     .getElementById("basic-plan")
     .getElementsByClassName("list-unstyled")[0]
-    .firstElementChild.innerHTML.replace(34, newBasicCapacity);
+    .firstElementChild.textContent.replace(10, newBasicCapacity);
+  var newProCapacity =
+    document
+      .getElementById("pro-plan")
+      .getElementsByClassName("list-unstyled")[0]
+      .firstElementChild.textContent.split(" ")[1] * 1.25;
+  document
+    .getElementById("pro-plan")
+    .getElementsByClassName(
+      "list-unstyled"
+    )[0].firstElementChild.textContent = document
+    .getElementById("pro-plan")
+    .getElementsByClassName("list-unstyled")[0]
+    .firstElementChild.textContent.replace(100, newProCapacity);
 };
 const runDom = () => {
   zadanie1();
