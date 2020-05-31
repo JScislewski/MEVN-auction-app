@@ -1,21 +1,30 @@
 const express = require("express");
-const mongoose = require("mongoose");
-const cors = require("cors");
-const auctionsRouter = require("./routes/api/auctionsRoutes.js");
+const passport = require("passport");
+require("./config/database-config");
+require("./config/passport-config.js");
+const auctionsRouter = require("./routes/api/auctionRoutes.js");
+const usersRouter = require("./routes/api/userRoutes.js");
 
+/**
+ * -------------- GENERAL SETUP ----------------
+ */
 const app = express();
-
-app.use(express.json());
-app.use(cors());
-
-mongoose.set('useFindAndModify', false);
-mongoose.connect(
-  "mongodb+srv://auctionuser:auctionuser@cluster0-vk8ez.mongodb.net/test?retryWrites=true&w=majority",
-  { useNewUrlParser: true, useUnifiedTopology: true }
-);
-
-app.use(auctionsRouter);
-
 const port = process.env.PORT || 5000;
+app.use(express.json());
 
+/**
+ * -------------- PASSPORT AUTHENTICATION ----------------
+ */
+app.use(passport.initialize());
+app.use(passport.session());
+
+/**
+ * -------------- ROUTES ----------------
+ */
+app.use(auctionsRouter);
+app.use(usersRouter);
+
+/**
+ * -------------- SERVER ----------------
+ */
 app.listen(port, () => console.log(`Server started on port ${port}`));

@@ -1,0 +1,30 @@
+const passport = require("passport");
+const bcrypt = require("bcrypt");
+const User = require("../models/userModel");
+const LocalStrategy = require("passport-local").Strategy;
+
+passport.use(
+  new LocalStrategy(function(username, password, done) {
+    User.findOne({ username: username }, function(err, user) {
+      console.log(username);
+      console.log(user);
+      if (err) {
+        return done(err);
+      }
+      if (!user) {
+        return done(null, false);
+      }
+      if (!bcrypt.compare(password, user.password)) {
+        return done(null, false);
+      }
+      return done(null, user);
+    });
+  })
+);
+passport.serializeUser(function(user, done) {
+  done(null, user);
+});
+
+passport.deserializeUser(function(user, done) {
+  done(null, user);
+});
