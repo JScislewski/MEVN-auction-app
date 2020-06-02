@@ -14,6 +14,21 @@ const routes = [
     name: "Login",
     component: () => import("../views/Login.vue"),
   },
+  {
+    path: "/register",
+    name: "Register",
+    component: () => import("../views/Register.vue"),
+  },
+  {
+    path: "/auction/:id",
+    name: "Auction View",
+    component: () => import("../views/Auction.vue"),
+  },
+  {
+    path: "/newAuction",
+    name: "New Auction",
+    component: () => import("../views/NewAuction.vue"),
+  },
 ];
 
 const router = new VueRouter({

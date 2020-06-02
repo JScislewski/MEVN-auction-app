@@ -15,7 +15,7 @@
 }
 </style>
 <script>
-import NavBarComponent from "./components/unauthorized/NavBarComponent";
+import NavBarComponent from "./components/NavBarComponent";
 export default {
   components: { NavBarComponent }
 };

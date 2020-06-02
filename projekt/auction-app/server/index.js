@@ -1,10 +1,10 @@
 const express = require("express");
-const https = require("https");
 const passport = require("passport");
 require("./config/database-config");
 require("./config/passport-config.js");
 const auctionsRouter = require("./routes/api/auctionRoutes.js");
 const usersRouter = require("./routes/api/userRoutes.js");
+const authenticationRouter = require("./routes/api/authenticationRoutes");
 const flash = require("connect-flash");
 const session = require("express-session");
 const cors = require("cors");
@@ -49,6 +49,7 @@ app.use(passport.session());
  */
 app.use(auctionsRouter);
 app.use(usersRouter);
+app.use(authenticationRouter);
 
 /**
  * -------------- SERVER ----------------

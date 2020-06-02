@@ -14,8 +14,6 @@ class AuthService {
     return axios.post(`${url}/login`, {
       username: username,
       password: password,
-    },{
-      withCredentials:true
     });
   
   }

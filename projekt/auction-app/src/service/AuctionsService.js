@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const url = "https://localhost:8080/api/auctions";
+const url = "http://localhost:5000/auctions";
 
 axios.defaults.withCredentials = true;
 
