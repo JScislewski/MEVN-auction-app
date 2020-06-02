@@ -11,7 +11,6 @@
     <button v-if="this.amount <= auctions.length" v-on:click="loadMore()">
       show more!
     </button>
-    <h5 v-if="auctions.length === 0">No auctions found. :(</h5>
   </div>
 </template>
 

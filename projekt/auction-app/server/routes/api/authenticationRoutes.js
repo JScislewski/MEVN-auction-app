@@ -68,7 +68,6 @@ router.post("/login", (req, res, next) => {
 
 router.get("/logout", (req, res) => {
   if (req.user) {
-    console.log("LOGOUT");
     req.session.destroy((err) => {
       res.status(200);
     });

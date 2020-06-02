@@ -29,6 +29,11 @@ const routes = [
     name: "New Auction",
     component: () => import("../views/NewAuction.vue"),
   },
+  {
+    path: "/my-auctions",
+    name: "my-auctions",
+    component: () => import("../views/MyAuctions.vue"),
+  },
 ];
 
 const router = new VueRouter({

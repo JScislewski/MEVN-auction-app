@@ -1,15 +1,19 @@
 <template>
   <div class="box" v-on:click="getAuction">
     <p>
+      Status:
+      <span v-if="auction.isActive">ACTIVE</span>
+      <span v-if="!auction.isActive">ENDED</span>
+    </p>
+    <p>
       Title:
-      {{ auction.name}}
-      <span class="auctionStatus sold" v-if="!auction.isActive">sold</span>
+      {{ auction.name }}
     </p>
     <p>CREATOR: {{ auction.sellerName }}</p>
     <p>
       <template v-if="auction.buyoutPrice">
-        <span>Type: Buyout</span>
-        <span>{{ auction.buyoutPrice }} zł</span>
+        <p>Type: Buyout</p>
+        <p>{{ auction.buyoutPrice }} zł</p>
       </template>
       <template v-else>
         <p>Type: Highest bid</p>

@@ -3,15 +3,12 @@
     <p class="live_bid" v-if="isActiveBid()">ACTIVE</p>
     <p>Title: {{ this.auction.name }}</p>
     <p>Creator:{{ this.auction.sellerName }}</p>
-    <button v-if="!isSeller()" v-on:click="message" class="message">
-      Message
-    </button>
     <div class="auction_body">
       <p>Description: {{ this.auction.description }}</p>
       <template v-if="this.auction.isActive">
         <template v-if="auction.buyoutPrice">
           <h2>{{ auction.buyoutPrice }} zł</h2>
-          <button v-on:click="buyout">Buy now</button>
+          <button v-on:click="buyout">BUY</button>
         </template>
         <template v-else>
           <h2>{{ auction.highestBid }} zł</h2>
@@ -20,12 +17,12 @@
         </template>
       </template>
       <template v-else>
-        <h2>SOLD OUT</h2>
+        <h1>AUCTION ENDED</h1>
       </template>
     </div>
   </div>
   <div v-else>
-    <h3>Auction not found, sorry. :((</h3>
+    <h1>404 AUCTION NOT FOUND</h1>
   </div>
 </template>
 

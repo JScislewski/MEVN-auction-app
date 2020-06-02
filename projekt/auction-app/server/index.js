@@ -8,6 +8,7 @@ const authenticationRouter = require("./routes/api/authenticationRoutes");
 const flash = require("connect-flash");
 const session = require("express-session");
 const cors = require("cors");
+const http = require ("http")
 
 /**
  * -------------- GENERAL SETUP ----------------
@@ -54,4 +55,5 @@ app.use(authenticationRouter);
 /**
  * -------------- SERVER ----------------
  */
+const server = http.createServer(app);
 app.listen(port, () => console.log(`Server started on port ${port}`));

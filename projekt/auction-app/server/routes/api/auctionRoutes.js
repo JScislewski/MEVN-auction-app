@@ -1,13 +1,12 @@
 const express = require("express");
 const auctionModel = require("../../models/auctionModel.js");
-const app = express();
+const router = express.Router();
 
-app.get("/auctions/all/:amount", (req, res) => {
+router.get("/auctions/all/:amount", (req, res) => {
   let amount = 5;
   if (req.params.amount) {
     amount = req.params.amount;
   }
-  console.log(amount);
   auctionModel
     .find({ isActive: true })
     .limit(parseInt(amount))
@@ -22,8 +21,29 @@ app.get("/auctions/all/:amount", (req, res) => {
       });
     });
 });
+router.get("/my-auctions", (req, res) => {
+  if (!req.isAuthenticated()) {
+    res.status(401).json({
+      error: "Unauthorized",
+    });
+  } else {
+    auctionModel
+      .find({ sellerName: req.user.username })
+      .exec()
+      .then((result) => {
+        console.log("result");
+        console.log(result);
+        res.status(200).json(result);
+      })
+      .catch((err) => {
+        res.status(500).json({
+          error: err,
+        });
+      });
+  }
+});
 
-app.get("/auctions", async (req, res) => {
+router.get("/auctions", async (req, res) => {
   const auctions = await auctionModel.find({});
   try {
     res.send(auctions);
@@ -32,7 +52,7 @@ app.get("/auctions", async (req, res) => {
   }
 });
 
-app.get("/auctions/:auctionId", (req, res) => {
+router.get("/auctions/:auctionId", (req, res) => {
   const id = req.params.auctionId;
   auctionModel
     .findOne({ _id: id })
@@ -47,7 +67,7 @@ app.get("/auctions/:auctionId", (req, res) => {
       });
     });
 });
-app.post("/auctions", (req, res) => {
+router.post("/auctions", (req, res) => {
   if (!req.isAuthenticated()) {
     res.status(401).json({
       error: "Unauthorized",
@@ -108,7 +128,7 @@ app.post("/auctions", (req, res) => {
   }
 });
 
-app.delete("/auction/:id", async (req, res) => {
+router.delete("/auctions/:id", async (req, res) => {
   try {
     const auction = await auctionModel.findByIdAndDelete(req.params.id);
     if (!auction) res.status(404).send("No item found");
@@ -118,14 +138,39 @@ app.delete("/auction/:id", async (req, res) => {
   }
 });
 
-app.patch("/auction/:id", async (req, res) => {
-  try {
-    await auctionModel.findOneAndUpdate(req.params.id, req.body, { new: true });
-    await auctionModel.save();
-    res.status(200).send();
-  } catch (err) {
-    res.status(500).send(err);
+router.patch("auctions/:id/buyout", async (req, res) => {
+  const id = req.params.id;
+  if (!req.isAuthenticated()) {
+    res.status(401).json({
+      error: "Unauthorized",
+    });
+  } else {
+    Auction.findOne({ _id: id })
+      .exec()
+      .then((result) => {
+        if (result) {
+          console.log("result");
+          if (result.isActive && req.user.username !== result.seller) {
+            console.log("BOUGHT");
+            result.buyer = req.user.username;
+            result.isActive = false;
+            result.save().then(res.status(200).json(result));
+          } else {
+            res.status(400);
+          }
+        } else {
+          res.status(404).json({
+            message: "auction with that Id not found",
+          });
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        res.status(500).json({
+          error: err,
+        });
+      });
   }
 });
 
-module.exports = app;
+module.exports = router;

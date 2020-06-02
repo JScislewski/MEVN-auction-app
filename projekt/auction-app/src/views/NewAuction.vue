@@ -5,16 +5,18 @@
         {{ error }}
       </p>
     </div>
-    <p>
-      <label for="title">Title:</label>
-      <input type="text" v-model="title" id="title" />
-    </p>
+
+    <p><label for="title">Title:</label></p>
+    <p><input type="text" v-model="title" id="title" /></p>
+
     <p>
       <label for="description">Description:</label>
-      <textarea v-model="description" id="description" />
     </p>
+    <p><textarea v-model="description" id="description" /></p>
     <p>
       <label>Auction type:</label>
+    </p>
+    <p>
       <label class="radio_label">
         <input
           v-model="auctionType"
@@ -64,7 +66,7 @@
 <script>
 import AuctionsService from "../service/AuctionsService";
 export default {
-  name: "AuctionCreatorComponent",
+  name: "NewAuction",
   data() {
     return {
       title: null,

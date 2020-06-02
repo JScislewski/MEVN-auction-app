@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const url = "http://localhost:5000/auctions";
+const url = "http://localhost:5000";
 
 axios.defaults.withCredentials = true;
 
@@ -8,7 +8,7 @@ class AuctionsService {
   static getAuction(id) {
     return new Promise((resolve, reject) => {
       axios
-        .get(`${url}/${id}`)
+        .get(`${url}/auctions/${id}`)
         .then((res) => {
           resolve(res.data);
         })
@@ -21,7 +21,7 @@ class AuctionsService {
   static getAuctions(amount) {
     return new Promise((resolve, reject) => {
       axios
-        .get(`${url}/all/${amount}`)
+        .get(`${url}/auctions/all/${amount}`)
         .then((res) => {
           resolve(res.data);
         })
@@ -34,33 +34,7 @@ class AuctionsService {
   static getMyAuctions() {
     return new Promise((resolve, reject) => {
       axios
-        .get(`${url}/myAuctions`)
-        .then((res) => {
-          resolve(res.data);
-        })
-        .catch((err) => {
-          reject(err);
-        });
-    });
-  }
-
-  static getWonAuctions() {
-    return new Promise((resolve, reject) => {
-      axios
-        .get(`${url}/wonAuctions`, { withCredentials: true })
-        .then((res) => {
-          resolve(res.data);
-        })
-        .catch((err) => {
-          reject(err);
-        });
-    });
-  }
-
-  static getCurrentAuctions() {
-    return new Promise((resolve, reject) => {
-      axios
-        .get(`${url}/currentAuctions`, { withCredentials: true })
+        .get(`${url}/my-auctions`)
         .then((res) => {
           resolve(res.data);
         })
@@ -71,7 +45,7 @@ class AuctionsService {
   }
 
   static createAuction(auction) {
-    return axios.post(url, auction);
+    return axios.post(`${url}/auctions`, auction);
   }
 
   static buyAuction(id) {
