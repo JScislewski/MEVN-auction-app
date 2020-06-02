@@ -64,10 +64,9 @@ export default {
         this.$router.push("/login");
       } else {
         console.log("buyout");
-        AuctionsService.buyAuction(this.$route.params.id)
+        AuctionsService.buyout(this.$route.params.id)
           .then((res) => {
             if (res.status === 200) {
-              console.log("BOUGHT");
               this.$router.push("/");
             }
           })

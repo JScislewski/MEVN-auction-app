@@ -47,11 +47,6 @@ class AuctionsService {
   static createAuction(auction) {
     return axios.post(`${url}/auctions`, auction);
   }
-
-  static buyAuction(id) {
-    return axios.patch(`${url}/${id}/buyout`, {});
-  }
-
   static deleteAuction(id) {
     return new Promise((resolve, reject) => {
       axios
@@ -63,6 +58,9 @@ class AuctionsService {
           reject(err);
         });
     });
+  }
+  static buyout(id) {
+    return axios.patch(`${url}/buyout/${id}`);
   }
 }
 

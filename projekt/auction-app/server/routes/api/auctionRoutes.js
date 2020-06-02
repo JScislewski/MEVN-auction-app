@@ -138,7 +138,7 @@ router.delete("/auctions/:id", async (req, res) => {
   }
 });
 
-router.patch("auctions/:id/buyout", async (req, res) => {
+router.patch("/buyout/:id", async (req, res) => {
   const id = req.params.id;
   if (!req.isAuthenticated()) {
     res.status(401).json({
@@ -149,9 +149,7 @@ router.patch("auctions/:id/buyout", async (req, res) => {
       .exec()
       .then((result) => {
         if (result) {
-          console.log("result");
           if (result.isActive && req.user.username !== result.seller) {
-            console.log("BOUGHT");
             result.buyer = req.user.username;
             result.isActive = false;
             result.save().then(res.status(200).json(result));
