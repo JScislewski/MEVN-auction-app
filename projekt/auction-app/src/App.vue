@@ -1,20 +1,8 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png" />
-    <AuctionComponent />
+    <NavBarComponent />
   </div>
 </template>
-
-<script>
-import AuctionComponent from "./components/AuctionComponent.vue";
-
-export default {
-  name: "App",
-  components: {
-    AuctionComponent
-  }
-};
-</script>
 
 <style>
 #app {
@@ -23,6 +11,11 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
 }
 </style>
+<script>
+import NavBarComponent from "./components/unauthorized/NavBarComponent";
+export default {
+  components: { NavBarComponent }
+};
+</script>

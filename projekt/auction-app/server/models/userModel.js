@@ -1,8 +1,9 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 
 const UserSchema = new mongoose.Schema({
-  username: {
+  email: {
     type: String,
     required: true,
     trim: true,
@@ -15,6 +16,12 @@ const UserSchema = new mongoose.Schema({
     trim: true,
   },
 });
+
+UserSchema.methods.generateAuthToken = async function() {
+  const user = this;
+  const token = jwt.sign({ _id: user._id.toSring() }, "token");
+  return token;
+};
 
 //Hash password before saving
 UserSchema.pre("save", async function save(next) {
