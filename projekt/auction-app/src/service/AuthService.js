@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const url = "https://localhost:5000/login";
+const url = "http://localhost:5000";
 
 class AuthService {
   static register(username, password) {
@@ -14,7 +14,10 @@ class AuthService {
     return axios.post(`${url}/login`, {
       username: username,
       password: password,
+    },{
+      withCredentials:true
     });
+  
   }
 
   static logout() {

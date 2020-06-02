@@ -13,9 +13,23 @@ const cors = require("cors");
  * -------------- GENERAL SETUP ----------------
  */
 const app = express();
+const whitelist = ["http://localhost:8080"];
+app.use(
+  cors({
+    origin: (origin, callback) => {
+      if (!origin||whitelist.indexOf(origin) !== -1) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"+origin));
+      }
+    },
+    credentials: true,
+  })
+);
 const port = process.env.PORT || 5000;
 app.use(express.json());
 app.use(flash());
+
 app.use(
   session({
     secret: "secret",

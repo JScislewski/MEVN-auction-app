@@ -1,6 +1,7 @@
 <template>
   <div id="app">
     <NavBarComponent />
+    <router-view/>
   </div>
 </template>
 
