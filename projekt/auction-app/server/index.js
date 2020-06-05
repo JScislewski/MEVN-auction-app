@@ -17,6 +17,8 @@ const chatRouter = require("./routes/api/chatRoutes");
 /**
  * -------------- GENERAL SETUP ----------------
  */
+const cookieParser = require("cookie-parser");
+app.use(cookieParser(process.env.APP_SECRET));
 const app = express();
 app.use(cors({ credentials: true }));
 const port = process.env.PORT || 5000;
@@ -46,10 +48,31 @@ app.use(authenticationRouter);
 app.use(chatRouter);
 
 /**
+ * -------------- HTTPS ----------------
+ */
+/* const server = https.createServer(
+  {
+    key: fs.readFileSync("./server/https/my.key"),
+    cert: fs.readFileSync("./server/https/my.crt"),
+  },
+  app
+); */
+
+/**
  * -------------- SOCKET.IO ----------------
  */
 const server = http.createServer(app);
-const io = socketio(server);
+const passportSocketIo = require("passport.socketio");
+const io = require("socket.io")(server);
+io.use(
+  passportSocketIo.authorize({
+    cookieParser: cookieParser,
+    key: "session.sid-key",
+    secret: process.env.APP_SECRET,
+    store: sessionStore,
+  })
+);
+require("./socketio/socketio")(io);
 io.on("connection", (socket) => {
   console.log("user connected!");
   socket.on("privateChat", (data) => {
