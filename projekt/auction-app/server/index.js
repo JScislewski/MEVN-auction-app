@@ -18,7 +18,10 @@ const mongoose = require("mongoose");
 /**
  * -------------- GENERAL SETUP ----------------
  */
+const path = require("path");
+const publicDirectoryPath = path.join(__dirname, "../dist");
 const app = express();
+app.use(express.static(publicDirectoryPath));
 const cookieParser = require("cookie-parser");
 app.use(cookieParser(process.env.APP_SECRET));
 app.use(cors({ credentials: true }));
@@ -69,14 +72,14 @@ const sessionStore = new MongoStore({
 });
 const passportSocketIo = require("passport.socketio");
 const io = require("socket.io")(server);
-/* io.use(
+ io.use(
   passportSocketIo.authorize({
     cookieParser: cookieParser,
     key: "session.sid-key",
     secret: process.env.APP_SECRET,
     store: sessionStore,
   })
-); */
+); 
 io.on("connection", (socket) => {
   console.log("user connected!");
   socket.on("privateChat", (data) => {
