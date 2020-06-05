@@ -4,18 +4,18 @@ const Message = require("../../models/messageModel");
 
 const router = express.Router();
 
-router.get("/chat/:firstUsername/:secondUsername", (req, res) => {
-  const firstUsername = req.params.firstUsername;
-  const secondUsername = req.params.secondUsername;
-  if (!req.isAuthenticated() || req.user.username !== firstUsername) {
+router.get("/chat/:user/:user2", (req, res) => {
+  const username = req.params.user;
+  const username2 = req.params.user2;
+  if (!req.isAuthenticated() || req.user.username !== username) {
     res.status(401).json({
       error: "Unauthorized",
     });
   } else {
     Message.find()
       .or([
-        { from: firstUsername, to: secondUsername },
-        { from: secondUsername, to: firstUsername },
+        { from: username, to: username2 },
+        { from: username2, to: username },
       ])
       .exec()
       .then((result) => {
@@ -33,7 +33,7 @@ router.get("/chat/:firstUsername/:secondUsername", (req, res) => {
 router.get("/chat/:user", (req, res) => {
   const username = req.params.user;
   console.log(username);
-  if (!req.isAuthenticated() || req.user.username !== username) {
+  if (!req.isAuthenticated()) {
     res.status(401).json({
       error: "Unauthorized",
     });
@@ -43,16 +43,13 @@ router.get("/chat/:user", (req, res) => {
       .exec()
       .then((result) => {
         let recipients = [];
-        console.log(result);
         result.forEach((e) => {
-          console.log(e);
           if (e.from === username && !recipients.includes(e.to)) {
             recipients.push(e.to);
           } else if (e.to === username && !recipients.includes(e.from)) {
             recipients.push(e.from);
           }
         });
-        console.log(recipients);
         res.status(200).json(recipients);
       });
   }

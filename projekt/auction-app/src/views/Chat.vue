@@ -2,10 +2,10 @@
   <div class="messages_container">
     <button
       class="recipient_btn"
-      v-for="(user, idx) in recipients"
+      v-for="(recipient, idx) in recipients"
       :key="'rec' + idx"
       v-on:click="joinChat(recipient)"
-      v-bind:class="{ current: isCurrentRecipient(user) }"
+      v-bind:class="{ current: isCurrentRecipient(recipient) }"
     >
       {{ recipient }}
     </button>
@@ -38,7 +38,7 @@
 
 <script>
 import io from "socket.io-client";
-import MessagesService from "../service/ChatService";
+import ChatService from "../service/ChatService";
 
 export default {
   name: "Messages",
@@ -77,7 +77,7 @@ export default {
       }
     },
     getMessages() {
-      MessagesService.getMessages(
+      ChatService.getMessages(
         this.$store.state.user.username,
         this.currentRecipient
       )
@@ -89,11 +89,11 @@ export default {
   },
   created() {
     if (this.$store.state.user !== null) {
-      MessagesService.getRecipients(this.$store.state.user.username)
+      ChatService.getRecipients(this.$store.state.user.username)
         .then((res) => {
           this.recipients = res;
           console.log("ok");
-          this.socket = io("https://localhost:8080");
+          this.socket = io("https://localhost:5000");
           this.socket.on("msg", (data) => {
             this.messages.push(data);
           });
@@ -169,7 +169,7 @@ export default {
 
   button {
     cursor: pointer;
-    background-color: #a2a5a8;
+    background-color: white;
     color: white;
     font-weight: bold;
     padding: 10px;
@@ -178,13 +178,14 @@ export default {
     background-color: #c03546;
   }
   textarea {
-    background-color: #dcdee0;
+    background-color: white;
+    border: solid 1px;
     padding: 10px;
     resize: none;
     width: 400px;
   }
   .send_msg_btn {
-    background-color: #c03546;
+    background-color: green;
     margin-top: 10px;
     width: 200px;
   }

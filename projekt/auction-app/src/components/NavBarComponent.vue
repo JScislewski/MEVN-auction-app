@@ -11,6 +11,7 @@
         <router-link to="/my-auctions">MY AUCTIONS</router-link>
         <router-link to="/won-auctions">WON AUCTIONS</router-link>
         <router-link to="/chat">CHAT</router-link>
+        <router-link to="/my-ongoing-auctions">MY ONGOING ACTIONS</router-link>
         <a v-on:click="logout()">LOGOUT</a>
       </template>
       <div id="username" v-if="this.$store.state.user !== null">
