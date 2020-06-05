@@ -12,8 +12,14 @@ const auctionSchema = mongoose.Schema({
     type: String,
     required: true,
   },
+  isActive: {
+    type: Boolean,
+  },
   buyoutPrice: {
     type: Number,
+  },
+  buyerName: {
+    type: String,
   },
   startingBid: {
     type: Number,
@@ -21,16 +27,10 @@ const auctionSchema = mongoose.Schema({
   highestBid: {
     type: Number,
   },
-  isActive: {
-    type: Boolean,
-  },
   bidders: {
     type: Array,
   },
   highestBidder: {
-    type: String,
-  },
-  buyer: {
     type: String,
   },
   ends: {

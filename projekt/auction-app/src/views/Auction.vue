@@ -79,11 +79,12 @@ export default {
       if (this.$store.state.user === null) {
         this.$store.commit("logout");
         this.$router.push("/login");
+        console.log("LogOut");
       } else {
         if (this.bidPrice > this.auction.highestBid) {
           this.socket.emit("newBid", {
             auctionId: this.auction._id,
-            bidder: this.$store.state.user.username,
+            bidderName: this.$store.state.user.username,
             bidPrice: this.bidPrice,
           });
           this.bidPrice = null;

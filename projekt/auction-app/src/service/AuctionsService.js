@@ -21,7 +21,7 @@ class AuctionsService {
   static getAuctions(amount) {
     return new Promise((resolve, reject) => {
       axios
-        .get(`${url}/auctions/all/${amount}`)
+        .get(`${url}/all-auctions/${amount}`)
         .then((res) => {
           resolve(res.data);
         })

@@ -2,8 +2,8 @@ const express = require("express");
 const auctionModel = require("../../models/auctionModel.js");
 const router = express.Router();
 
-router.get("/auctions/all/:amount", (req, res) => {
-  let amount = 5;
+router.get("/all-auctions/:amount", (req, res) => {
+  let amount = 3;
   if (req.params.amount) {
     amount = req.params.amount;
   }
@@ -31,8 +31,6 @@ router.get("/my-auctions", (req, res) => {
       .find({ sellerName: req.user.username })
       .exec()
       .then((result) => {
-        console.log("result");
-        console.log(result);
         res.status(200).json(result);
       })
       .catch((err) => {
@@ -43,19 +41,10 @@ router.get("/my-auctions", (req, res) => {
   }
 });
 
-router.get("/auctions", async (req, res) => {
-  const auctions = await auctionModel.find({});
-  try {
-    res.send(auctions);
-  } catch (err) {
-    res.status(500).send(err);
-  }
-});
-
 router.get("/auctions/:auctionId", (req, res) => {
-  const id = req.params.auctionId;
+  const auctionId = req.params.auctionId;
   auctionModel
-    .findOne({ _id: id })
+    .findOne({ _id: auctionId })
     .exec()
     .then((result) => {
       console.log(result);
@@ -67,6 +56,7 @@ router.get("/auctions/:auctionId", (req, res) => {
       });
     });
 });
+
 router.post("/auctions", (req, res) => {
   if (!req.isAuthenticated()) {
     res.status(401).json({
@@ -139,26 +129,28 @@ router.delete("/auctions/:id", async (req, res) => {
 });
 
 router.patch("/buyout/:id", async (req, res) => {
-  const id = req.params.id;
+  const auctionId = req.params.id;
   if (!req.isAuthenticated()) {
     res.status(401).json({
       error: "Unauthorized",
     });
   } else {
-    Auction.findOne({ _id: id })
+    auctionModel
+      .findOne({ _id: auctionId })
       .exec()
       .then((result) => {
         if (result) {
-          if (result.isActive && req.user.username !== result.seller) {
-            result.buyer = req.user.username;
+          if (result.isActive && req.user.username !== result.sellerName) {
+            result.buyerName = req.user.username;
             result.isActive = false;
+            console.log(result);
             result.save().then(res.status(200).json(result));
           } else {
             res.status(400);
           }
         } else {
           res.status(404).json({
-            message: "auction with that Id not found",
+            message: "Auction not found",
           });
         }
       })

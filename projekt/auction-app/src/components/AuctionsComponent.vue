@@ -22,13 +22,13 @@ export default {
   components: { AuctionPreview },
   data() {
     return {
-      amount: 5,
+      amount: 3,
       auctions: [],
     };
   },
   methods: {
     loadMore() {
-      this.amount += 5;
+      this.amount += 3;
       AuctionsService.getAuctions(this.amount)
         .then((res) => {
           this.auctions = res;
