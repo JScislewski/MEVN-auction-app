@@ -13,13 +13,14 @@ const socketio = require("socket.io");
 const Auction = require("./models/auctionModel");
 const Message = require("./models/messageModel");
 const chatRouter = require("./routes/api/chatRoutes");
+const mongoose = require("mongoose");
 
 /**
  * -------------- GENERAL SETUP ----------------
  */
+const app = express();
 const cookieParser = require("cookie-parser");
 app.use(cookieParser(process.env.APP_SECRET));
-const app = express();
 app.use(cors({ credentials: true }));
 const port = process.env.PORT || 5000;
 app.use(express.json());
@@ -32,6 +33,7 @@ app.use(
     saveUninitialized: true,
   })
 );
+const MongoStore = require("connect-mongo")(session);
 
 /**
  * -------------- PASSPORT AUTHENTICATION ----------------
@@ -62,17 +64,19 @@ app.use(chatRouter);
  * -------------- SOCKET.IO ----------------
  */
 const server = http.createServer(app);
+const sessionStore = new MongoStore({
+  mongooseConnection: mongoose.connection,
+});
 const passportSocketIo = require("passport.socketio");
 const io = require("socket.io")(server);
-io.use(
+/* io.use(
   passportSocketIo.authorize({
     cookieParser: cookieParser,
     key: "session.sid-key",
     secret: process.env.APP_SECRET,
     store: sessionStore,
   })
-);
-require("./socketio/socketio")(io);
+); */
 io.on("connection", (socket) => {
   console.log("user connected!");
   socket.on("privateChat", (data) => {
