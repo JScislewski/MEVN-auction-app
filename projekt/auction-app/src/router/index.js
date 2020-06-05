@@ -34,6 +34,16 @@ const routes = [
     name: "my-auctions",
     component: () => import("../views/MyAuctions.vue"),
   },
+  {
+    path: "/chat",
+    name: "chat",
+    component: () => import("../views/Chat"),
+  },
+  {
+    path: "/chat/:recipient",
+    name: "chat",
+    component: () => import("../views/Chat"),
+  },
 ];
 
 const router = new VueRouter({

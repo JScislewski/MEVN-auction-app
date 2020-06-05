@@ -2,7 +2,12 @@
   <div class="auction_container" v-if="this.auction !== null">
     <p class="live_bid" v-if="isActiveBid()">ACTIVE</p>
     <p>Title: {{ this.auction.name }}</p>
-    <p>Creator:{{ this.auction.sellerName }}</p>
+    <p>
+      Creator:{{ this.auction.sellerName }}
+      <button v-if="!isSeller()" v-on:click="openChat" class="chatButton">
+        chat
+      </button>
+    </p>
     <div class="auction_body">
       <p>Description: {{ this.auction.description }}</p>
       <template v-if="this.auction.isActive">
@@ -12,7 +17,7 @@
         </template>
         <template v-else>
           <h2>{{ auction.highestBid }} zł</h2>
-          <input v-model="bidPrice" type="number" step="0.01" />
+          <input v-model="bidPrice" type="number" step="1" />
           <button v-on:click="bid">Bid</button>
         </template>
       </template>
@@ -51,12 +56,12 @@ export default {
     },
     isSeller() {
       if (this.$store.state.user !== null) {
-        return this.$store.state.user.username === this.auction.seller;
+        return this.$store.state.user.username === this.auction.sellerName;
       }
       return false;
     },
-    message() {
-      this.$router.push("/messages/" + this.auction.seller);
+    openChat() {
+      this.$router.push("/chat/" + this.auction.sellerName);
     },
     buyout() {
       if (this.$store.state.user === null) {
