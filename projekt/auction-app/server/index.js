@@ -7,13 +7,13 @@ const usersRouter = require("./routes/api/userRoutes.js");
 const authenticationRouter = require("./routes/api/authenticationRoutes");
 const flash = require("connect-flash");
 const session = require("express-session");
-const cors = require("cors");
-const http = require("http");
+const https = require("https");
 const socketio = require("socket.io");
 const Auction = require("./models/auctionModel");
 const Message = require("./models/messageModel");
 const chatRouter = require("./routes/api/chatRoutes");
 const mongoose = require("mongoose");
+const fs = require("fs");
 
 /**
  * -------------- GENERAL SETUP ----------------
@@ -24,7 +24,6 @@ const app = express();
 app.use(express.static(publicDirectoryPath));
 const cookieParser = require("cookie-parser");
 app.use(cookieParser(process.env.APP_SECRET));
-app.use(cors({ credentials: true }));
 const port = process.env.PORT || 5000;
 app.use(express.json());
 app.use(flash());
@@ -55,31 +54,27 @@ app.use(chatRouter);
 /**
  * -------------- HTTPS ----------------
  */
-/* const server = https.createServer(
-  {
-    key: fs.readFileSync("./server/https/my.key"),
-    cert: fs.readFileSync("./server/https/my.crt"),
-  },
-  app
-); */
+const privateKey = fs.readFileSync("./server/https/key.pem");
+const certificate = fs.readFileSync("./server/https/certificate.pem");
+const credentials = { key: privateKey, cert: certificate };
+const server = https.createServer(credentials, app);
 
 /**
  * -------------- SOCKET.IO ----------------
  */
-const server = http.createServer(app);
 const sessionStore = new MongoStore({
   mongooseConnection: mongoose.connection,
 });
 const passportSocketIo = require("passport.socketio");
 const io = require("socket.io")(server);
- io.use(
+io.use(
   passportSocketIo.authorize({
     cookieParser: cookieParser,
     key: "session.sid-key",
     secret: process.env.APP_SECRET,
     store: sessionStore,
   })
-); 
+);
 io.on("connection", (socket) => {
   console.log("user connected!");
   socket.on("privateChat", (data) => {
