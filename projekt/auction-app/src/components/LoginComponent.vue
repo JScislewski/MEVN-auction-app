@@ -6,8 +6,8 @@
       </p>
     </div>
 
-    <label for="username">Username:</label>
-    <input type="text" v-model="username" id="username" value="username" />
+    <label for="usernameInput">Username:</label>
+    <input type="text" v-model="username" id="usernameInput" value="username" />
     <label for="password">Password:</label>
     <input type="password" v-model="password" id="password" value="password" />
     <button v-on:click="login">LOGIN</button>
@@ -16,6 +16,7 @@
 
 <script>
 import AuthorizationService from "../service/AuthorizationService";
+
 export default {
   name: "LoginComponent",
   data() {
@@ -44,3 +45,59 @@ export default {
   },
 };
 </script>
+<style lang="scss">
+.errors_container {
+  margin-bottom: 10px;
+}
+
+.login_form {
+  color: black;
+  text-align: left;
+  margin: 20px auto 0 auto;
+  max-width: 300px;
+  display: flex;
+  flex-direction: column;
+  font-size: 16px;
+
+  button,
+  input,textarea {
+    color: black;
+    padding: 10px;
+    border-radius: 10px;
+    margin: 20px;
+  }
+
+  button {
+    cursor: pointer;
+    background-color: green;
+    color: white;
+    font-weight: bold;
+    text-decoration: none;
+    border: none;
+  }
+
+  label {
+    margin-top: 10px;
+    margin-left: 30px;
+    font-weight: bold;
+  }
+
+  input {
+    text-align: left;
+    border: 2px solid black;
+  }
+
+  input:focus {
+    background-color: greenyellow;
+  }
+
+  .error {
+    padding: 10px;
+    border-radius: 25px;
+    margin: 10px 20px;
+    color: white;
+    background-color: #c03546;
+    font-size: 13px;
+  }
+}
+</style>

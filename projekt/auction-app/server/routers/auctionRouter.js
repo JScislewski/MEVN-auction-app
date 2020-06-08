@@ -2,7 +2,7 @@ const express = require("express");
 const Auction = require("../models/auctionModel.js");
 const router = express.Router();
 
-const authMiddleware = (req, res, next) => {
+const checkAuth = (req, res, next) => {
   if (!req.isAuthenticated()) {
     res.status(401).json({
       error: "Unauthorized",
@@ -72,6 +72,18 @@ router.get("/my-auctions", (req, res) => {
         });
       });
   }
+});
+router.get("/my-bids", checkAuth, (req, res) => {
+  Auction.find({ bidders: req.user.username, isActive: true })
+    .exec()
+    .then((result) => {
+      res.status(200).json(result);
+    })
+    .catch((err) => {
+      res.status(500).json({
+        error: err,
+      });
+    });
 });
 
 router.get("/auctions/:auctionId", (req, res) => {
@@ -149,7 +161,7 @@ router.post("/auctions", (req, res) => {
     }
   }
 });
-router.patch("/:auctionId", authMiddleware, (req, res) => {
+router.patch("/:auctionId", checkAuth, (req, res) => {
   const id = req.params.auctionId;
   const auction = req.body;
   let errors = validateAuction(auction);

@@ -20,7 +20,6 @@
       <template v-else>
         <router-link to="/newAuction">NEW AUCTION</router-link>
         <router-link to="/my-auctions">MY AUCTIONS</router-link>
-        <router-link to="/won-auctions">WON AUCTIONS</router-link>
         <router-link to="/my-bids">MY BIDS</router-link>
         <router-link to="/chat">CHAT</router-link>
         <a v-on:click="logout()">LOGOUT</a>

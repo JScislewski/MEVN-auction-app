@@ -40,6 +40,11 @@ const routes = [
     component: () => import("../views/MyAuctionsView.vue"),
   },
   {
+    path: "/my-bids",
+    name: "my-bids",
+    component: () => import("../views/MyBidsView"),
+  },
+  {
     path: "/chat",
     name: "chat",
     component: () => import("../views/ChatView.vue"),

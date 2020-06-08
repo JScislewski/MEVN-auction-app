@@ -88,7 +88,7 @@ export default {
         if (this.bidPrice > this.auction.highestBid) {
           this.socket.emit("newBid", {
             auctionId: this.auction._id,
-            bidderName: this.$store.state.user.username,
+            bidder: this.$store.state.user.username,
             bidPrice: this.bidPrice,
           });
           this.bidPrice = null;

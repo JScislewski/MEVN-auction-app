@@ -43,6 +43,18 @@ class AuctionsService {
         });
     });
   }
+  static getMyBids() {
+    return new Promise((resolve, reject) => {
+      axios
+        .get(`${url}/my-bids`, { withCredentials: true })
+        .then((res) => {
+          resolve(res.data);
+        })
+        .catch((err) => {
+          reject(err);
+        });
+    });
+  }
 
   static createAuction(auction) {
     return axios.post(`${url}/auctions`, auction);

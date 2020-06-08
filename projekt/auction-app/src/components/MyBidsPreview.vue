@@ -1,35 +1,64 @@
 <template>
-  <div class="auction_box">
+  <div class="auction_box" v-if="auction">
     <h3 class="auction_title" v-on:click="getAuction">
       {{ auction.name }}
       <span class="status sale" v-if="auction.isActive">available</span>
       <span class="status sold" v-else>sold</span>
     </h3>
-    <h5 class="auction_seller">Seller: {{ auction.sellerName }}</h5>
+    <h5 class="auction_seller">seller: {{ auction.sellerName }}</h5>
     <div class="spoiler_bar">
-      <template v-if="auction.buyoutPrice">
-        <h2>{{ auction.buyoutPrice }} zł</h2>
-        <button v-on:click="getAuction">Buy now</button>
-      </template>
-      <template v-else>
-        <h2>{{ auction.highestBid }}zł</h2>
-        <button v-on:click="getAuction">Bid</button>
-      </template>
+      <h2>{{ auction.highestBid }}zł</h2>
+      <input v-model="bidPrice" type="number" step="0.01" />
+      <button v-on:click="bid()">Bid</button>
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: "AuctionPreviewComponent",
-  props: ["auction"],
+  name: "MyBidsPreview",
+  props: ["auction", "socket"],
+  data() {
+    return {
+      bidPrice: null,
+    };
+  },
   methods: {
     getAuction() {
       this.$router.push("/auction/" + this.$props.auction._id);
     },
+    bid() {
+      if (this.$store.state.user === null) {
+        this.$store.commit("logout");
+        this.$router.push("/login");
+      } else {
+        if (this.bidPrice > this.$props.auction.highestBid) {
+          this.socket.emit("newBid", {
+            auctionId: this.$props.auction._id,
+            bidder: this.$store.state.user.username,
+            bidPrice: this.bidPrice,
+          });
+          this.bidPrice = null;
+        }
+      }
+    },
+  },
+  created() {
+    this.socket.emit("watchLiveBid", {
+      auctionId: this.$props.auction._id,
+    });
+    this.socket.on("bid", (data) => {
+      if (this.$props.auction._id === data._id) {
+        this.$props.auction.highestBid = data.highestBid;
+      }
+    });
+    this.socket.on("sold", () => {
+      this.$props.auction.isActive = false;
+    });
   },
 };
 </script>
+
 <style scoped lang="scss">
 .auction_box {
   margin-top: 50px;
@@ -64,9 +93,14 @@ export default {
     grid-template-columns: 250px 100px;
     grid-template-rows: 40px;
     margin-bottom: 10px;
-
+    input {
+      border-radius: 10px;
+      border: 2px solid black;
+      background-color: white;
+      padding: 5px;
+      margin: 5px;
+    }
     button {
-      width: 10em;
       padding: 5px;
       margin: 5px;
       cursor: pointer;
