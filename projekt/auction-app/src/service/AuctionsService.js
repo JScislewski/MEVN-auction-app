@@ -59,6 +59,9 @@ class AuctionsService {
         });
     });
   }
+  static editAuction(auction) {
+    return axios.patch(`${url}/${auction._id}`, auction);
+  }
   static buyout(id) {
     return axios.patch(`${url}/buyout/${id}`);
   }

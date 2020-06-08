@@ -2,6 +2,41 @@ const express = require("express");
 const Auction = require("../models/auctionModel.js");
 const router = express.Router();
 
+const authMiddleware = (req, res, next) => {
+  if (!req.isAuthenticated()) {
+    res.status(401).json({
+      error: "Unauthorized",
+    });
+  } else {
+    return next();
+  }
+};
+
+const validateAuction = (auction) => {
+  let errors = [];
+  if (!auction.name || auction.name.length <= 2) {
+    errors.push("Too short name.");
+  }
+  if (auction.description <= 5) {
+    auction.errors.push("Too short description");
+  }
+
+  if (
+    (isNaN(auction.buyoutPrice) || auction.buyoutPrice <= 0) &&
+    (isNaN(auction.startingBid) || auction.startingBid <= 0)
+  ) {
+    errors.push("Starting price must be greater than 0.");
+  }
+
+  if (
+    auction.startingBid &&
+    new Date(auction.ends).getTime() <= new Date().getTime()
+  ) {
+    errors.push("Enter proper date.");
+  }
+  return errors;
+};
+
 router.get("/all/:amount", (req, res) => {
   let amount = 5;
   if (req.params.amount) {
@@ -114,17 +149,44 @@ router.post("/auctions", (req, res) => {
     }
   }
 });
-
-router.delete("/auctions/:id", async (req, res) => {
-  try {
-    const auction = await Auction.findByIdAndDelete(req.params.id);
-    if (!auction) res.status(404).send("No item found");
-    res.status(200).send();
-  } catch (err) {
-    res.status(500).send(err);
+router.patch("/:auctionId", authMiddleware, (req, res) => {
+  const id = req.params.auctionId;
+  const auction = req.body;
+  let errors = validateAuction(auction);
+  if (errors.length === 0) {
+    Auction.findOne({ _id: id })
+      .exec()
+      .then((result) => {
+        result.name = auction.name;
+        result.description = auction.description;
+        result.buyoutPrice = auction.buyoutPrice;
+        result.startingBid = auction.startingBid;
+        result.highestBid = auction.startingBid;
+        result.ends = auction.ends;
+        result
+          .save()
+          .then(() => {
+            res.status(200).json({
+              msg: "Success",
+            });
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      })
+      .catch((err) => {
+        console.log(err);
+        res.status(500).json({
+          error: err,
+        });
+      });
+  } else {
+    console.log(errors);
+    res.status(400).json({
+      errors: errors,
+    });
   }
 });
-
 router.patch("/buyout/:id", async (req, res) => {
   const auctionId = req.params.id;
   if (!req.isAuthenticated()) {
@@ -147,6 +209,48 @@ router.patch("/buyout/:id", async (req, res) => {
         } else {
           res.status(404).json({
             message: "Auction not found",
+          });
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        res.status(500).json({
+          error: err,
+        });
+      });
+  }
+});
+router.delete("/:auctionId", (req, res) => {
+  if (!req.isAuthenticated()) {
+    res.status(401).json({
+      error: "Unauthorized",
+    });
+  } else {
+    const id = req.params.auctionId;
+    Auction.findOne({ _id: id, sellerName: req.user.username })
+      .exec()
+      .then((result) => {
+        if (result) {
+          if (result.isActive) {
+            if (result.highestBid <= result.startingBid) {
+              result.delete().then(() => {
+                res.status(200).json({
+                  message: "Auction deleted: " + id,
+                });
+              });
+            } else {
+              res.status(400).json({
+                message: "400 Auction already started",
+              });
+            }
+          } else {
+            res.status(400).json({
+              message: "400 Auction already ended",
+            });
+          }
+        } else {
+          res.status(404).json({
+            message: "404 Auction not found",
           });
         }
       })

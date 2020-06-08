@@ -6,17 +6,18 @@
       v-for="(auction, idx) in this.auctions"
       :key="idx"
     >
-      <MyAuctionSpoiler :auction="auction" />
+      <MyAuctionPreviewComponent :auction="auction" />
     </div>
   </div>
 </template>
 
 <script>
 import AuctionsService from "../service/AuctionsService";
-import MyAuctionSpoiler from "../components/AuctionPreviewComponent";
+import MyAuctionPreviewComponent from "./MyAuctionPreviewComponent";
+
 export default {
-  name: "MyAuctions",
-  components: { MyAuctionSpoiler },
+  name: "MyAuctionsComponent",
+  components: { MyAuctionPreviewComponent },
   data() {
     return {
       auctions: [],
@@ -36,10 +37,19 @@ export default {
   },
 };
 </script>
-
-<style scoped>
-.auctions_container {
-  max-width: 400px;
-  margin: 0 auto;
-}
+<style scoped lang="scss">
+  .auctions_container {
+    max-width: 400px;
+    margin: 0 auto;
+  }
+  button {
+    cursor: pointer;
+    padding: 10px;
+    background-color: green;
+    border-radius: 10px;
+    color: white;
+    font-weight: bold;
+    text-decoration: none;
+    border: none;
+  }
 </style>

@@ -30,9 +30,14 @@ const routes = [
     component: () => import("../views/NewAuctionView.vue"),
   },
   {
+    path: "/edit-auction/:id",
+    name: "Edit Auction",
+    component: () => import("../views/EditAuctionView"),
+  },
+  {
     path: "/my-auctions",
     name: "my-auctions",
-    component: () => import("../views/MyAuctions.vue"),
+    component: () => import("../views/MyAuctionsView.vue"),
   },
   {
     path: "/chat",

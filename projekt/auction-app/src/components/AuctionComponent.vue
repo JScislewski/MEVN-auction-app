@@ -27,7 +27,6 @@
     </div>
   </div>
   <div v-else>
-    <h1>404 AUCTION NOT FOUND</h1>
   </div>
 </template>
 

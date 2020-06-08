@@ -5,7 +5,7 @@
       <span class="status sale" v-if="auction.isActive">available</span>
       <span class="status sold" v-else>sold</span>
     </h3>
-    <h5 class="auction_seller">od {{ auction.sellerName }}</h5>
+    <h5 class="auction_seller">Seller: {{ auction.sellerName }}</h5>
     <div class="spoiler_bar">
       <template v-if="auction.buyoutPrice">
         <h2>{{ auction.buyoutPrice }} zł</h2>
@@ -21,7 +21,7 @@
 
 <script>
 export default {
-  name: "AuctionSpoiler",
+  name: "AuctionPreviewComponent",
   props: ["auction"],
   methods: {
     getAuction() {
@@ -30,44 +30,48 @@ export default {
   },
 };
 </script>
-
 <style scoped lang="scss">
 .auction_box {
-  margin: 20px 0;
+  margin-top: 50px;
+  margin-left: 5px;
+  margin-right: 5px;
+  border: 2px solid black;
   border-radius: 10px;
-  background-color: #f5f5f5;
+  background-color: white;
   padding: 5px 20px;
   text-align: left;
   .auction_title {
     cursor: pointer;
-    color: #492540;
     margin-bottom: 0;
   }
   .auction_seller {
     margin-top: 5px;
   }
   .status {
+    padding: 5px;
+    color: white;
+    border-radius: 10px;
+    border: none;
     font-size: 12px;
     font-weight: normal;
   }
   .sale {
-    color: #3ca345;
+    background-color: green;
   }
   .sold {
-    color: #c03546;
+    background-color: red;
   }
   .spoiler_bar {
-    display: inline-grid;
     grid-template-columns: 250px 100px;
     grid-template-rows: 40px;
     margin-bottom: 10px;
 
     button {
+      margin-top: 10px;
       height: 40px;
-      margin-left: auto;
       width: 80px;
       cursor: pointer;
-      background-color: #c03546;
+      background-color: green;
       border-radius: 10px;
       color: white;
       font-weight: bold;
