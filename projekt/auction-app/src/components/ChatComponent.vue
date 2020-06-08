@@ -126,3 +126,72 @@ export default {
   },
 };
 </script>
+<style scoped lang="scss">
+.messages_container {
+  margin-top: 40px;
+  #message_box {
+    padding: 10px;
+    width: 400px;
+    margin: 40px auto;
+    max-height: 400px;
+    overflow-y: scroll;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    .message_row {
+      display: flex;
+      justify-content: left;
+    }
+    .sender_row {
+      justify-content: right;
+    }
+    p {
+      border: 2px solid black;
+      padding: 7px;
+      margin: 7px;
+      display: inline-block;
+    }
+    .sender {
+      background-color: greenyellow;
+      align-self: flex-end;
+      text-align: right;
+    }
+  }
+  button,
+  textarea,
+  #message_box,
+  p {
+    border-radius: 10px;
+    text-decoration: none;
+    border: none;
+  }
+
+  button {
+    cursor: pointer;
+    background-color: #a2a5a8;
+    color: white;
+    font-weight: bold;
+    padding: 10px;
+  }
+  .current {
+    color: black;
+    background-color: white;
+    border: 2px blue solid;
+  }
+  textarea {
+    border: 2px solid black;
+    padding: 10px;
+    resize: none;
+    width: 400px;
+  }
+  .send_msg_btn {
+    background-color: green;
+    margin-top: 10px;
+    width: 200px;
+  }
+
+  .recipient_btn {
+    margin: 0 5px;
+  }
+}
+</style>
