@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const url = "https://localhost:5000/chat";
+const url = "api/chat";
 
 class ChatService {
   static getMessages(user, user2) {

@@ -7,27 +7,27 @@ const routes = [
   {
     path: "/",
     name: "HomePage",
-    component: () => import("../views/HomePage"),
+    component: () => import("../views/HomeView"),
   },
   {
     path: "/login",
     name: "Login",
-    component: () => import("../views/Login.vue"),
+    component: () => import("../views/LoginView.vue"),
   },
   {
     path: "/register",
     name: "Register",
-    component: () => import("../views/Register.vue"),
+    component: () => import("../views/RegisterView.vue"),
   },
   {
     path: "/auction/:id",
     name: "Auction View",
-    component: () => import("../views/Auction.vue"),
+    component: () => import("../views/AuctionView.vue"),
   },
   {
     path: "/newAuction",
     name: "New Auction",
-    component: () => import("../views/NewAuction.vue"),
+    component: () => import("../views/NewAuctionView.vue"),
   },
   {
     path: "/my-auctions",
@@ -37,12 +37,12 @@ const routes = [
   {
     path: "/chat",
     name: "chat",
-    component: () => import("../views/Chat"),
+    component: () => import("../views/ChatView.vue"),
   },
   {
     path: "/chat/:recipient",
     name: "chat",
-    component: () => import("../views/Chat"),
+    component: () => import("../views/ChatView.vue"),
   },
 ];
 

@@ -41,7 +41,7 @@ import io from "socket.io-client";
 import ChatService from "../service/ChatService";
 
 export default {
-  name: "Chat",
+  name: "ChatComponent",
   data() {
     return {
       recipients: [],

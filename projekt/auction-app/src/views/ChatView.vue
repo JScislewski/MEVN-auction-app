@@ -1,15 +1,15 @@
 <template>
   <div>
-    <Messages />
+    <ChatComponent />
   </div>
 </template>
 
 <script>
-import Messages from "../components/ChatComponent";
+import ChatComponent from "../components/ChatComponent";
 export default {
   name: "ChatView",
   components: {
-    Messages,
+    ChatComponent,
   },
 };
 </script>

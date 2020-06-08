@@ -21,9 +21,10 @@
 </template>
 
 <script>
-import AuthService from "../service/AuthService";
+import AuthService from "../service/AuthorizationService";
+
 export default {
-  name: "LoginComponent",
+  name: "RegisterComponent",
   data() {
     return {
       username: null,
@@ -39,9 +40,11 @@ export default {
       if (this.username !== this.username2) {
         this.errors.push("Usernames are not the same!");
       }
+
       if (this.password !== this.password2) {
         this.errors.push("Passwords do not match!");
       }
+
       if (this.errors.length === 0) {
         AuthService.register(this.username, this.password)
           .then((res) => {

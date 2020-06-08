@@ -6,7 +6,7 @@
       v-for="(auction, idx) in this.auctions"
       :key="idx"
     >
-      <AuctionPreview :auction="auction" />
+      <AuctionSpoiler :auction="auction" />
     </div>
     <button v-if="this.amount <= auctions.length" v-on:click="loadMore()">
       show more!
@@ -16,19 +16,20 @@
 
 <script>
 import AuctionsService from "../service/AuctionsService";
-import AuctionPreview from "../components/AuctionPreview.vue";
+import AuctionSpoiler from "./AuctionPreviewComponent";
+
 export default {
   name: "AuctionsComponent",
-  components: { AuctionPreview },
+  components: { AuctionSpoiler },
   data() {
     return {
-      amount: 3,
+      amount: 5,
       auctions: [],
     };
   },
   methods: {
     loadMore() {
-      this.amount += 3;
+      this.amount += 5;
       AuctionsService.getAuctions(this.amount)
         .then((res) => {
           this.auctions = res;

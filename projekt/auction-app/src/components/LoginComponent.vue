@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import AuthService from "../service/AuthService";
+import AuthorizationService from "../service/AuthorizationService";
 export default {
   name: "LoginComponent",
   data() {
@@ -28,7 +28,7 @@ export default {
   methods: {
     async login() {
       this.errors = [];
-      AuthService.login(this.username, this.password)
+      AuthorizationService.login(this.username, this.password)
         .then((res) => {
           if (res.status === 200) {
             this.$store.commit("login", res.data.user);
@@ -44,51 +44,3 @@ export default {
   },
 };
 </script>
-
-<style lang="scss">
-.errors_container {
-  margin-bottom: 10px;
-}
-.login_form {
-  text-align: left;
-  margin: 20px auto 0 auto;
-  max-width: 300px;
-  display: flex;
-  flex-direction: column;
-  font-size: 16px;
-  button,
-  input {
-    padding: 10px;
-    border-radius: 10px;
-    margin: 20px;
-  }
-  button {
-    cursor: pointer;
-    background-color: green;
-    color: white;
-  }
-  label {
-    text-align: center;
-    font-weight: bold;
-    color: black;
-  }
-  input {
-    color: #2c3e50;
-    text-align: left;
-    border: solid 1px;
-  }
-  input:focus {
-    background-color: greenyellow;
-  }
-  .error {
-    text-align: center;
-    font-weight: bold;
-    padding: 10px;
-    border-radius: 10px;
-    margin: 5px;
-    color: white;
-    background-color: red;
-    font-size: 12px;
-  }
-}
-</style>

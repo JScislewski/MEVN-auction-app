@@ -102,7 +102,7 @@ export default {
       .then((res) => {
         this.auction = res;
         if (this.$store.state.user && this.auction.highestBid) {
-          this.socket = io("https://localhost:5000");
+          this.socket = io(`https://${window.location.host}`);
           this.socket.emit("joinLiveBid", {
             auctionId: this.auction._id,
           });

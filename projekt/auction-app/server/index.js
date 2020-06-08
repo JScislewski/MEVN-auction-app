@@ -51,14 +51,14 @@ app.use(passport.session());
 /**
  * -------------- ROUTES ----------------
  */
-const auctionsRouter = require("./routes/api/auctionRoutes.js");
-app.use("api/auctions", auctionsRouter);
-const authenticationRouter = require("./routes/api/authenticationRoutes");
-app.use("api/authentication", authenticationRouter);
-const chatRouter = require("./routes/api/chatRoutes");
-app.use("api/chat", chatRouter);
-const usersRouter = require("./routes/api/userRoutes.js");
-app.use("api/users", usersRouter);
+const auctionsRouter = require("./routers/auctionRouter.js");
+app.use("/api/auctions", auctionsRouter);
+const authenticationRouter = require("./routers/authenticationRouter");
+app.use("/api/authentication", authenticationRouter);
+const chatRouter = require("./routers/chatRouter");
+app.use("/api/chat", chatRouter);
+const usersRouter = require("./routers/userRouter.js");
+app.use("/api/users", usersRouter);
 
 /**
  * -------------- HTTPS ----------------
@@ -84,12 +84,14 @@ io.use(
     store: sessionStore,
   })
 );
-require("./socketio/index")(io);
+require("./socketio/socketio")(io);
 
 /**
  * -------------- SERVER ----------------
  */
 const port = process.env.PORT;
 server.listen(port, () => {
-  console.log(`Server is up on port: ${port}!`);
+  const listEndpoints = require("express-list-endpoints");
+  console.log(listEndpoints(app));
+  console.log(server.address());
 });

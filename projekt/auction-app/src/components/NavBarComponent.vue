@@ -22,12 +22,12 @@
 </template>
 
 <script>
-import AuthService from "../service/AuthService";
+import AuthorizationService from "../service/AuthorizationService";
 export default {
   name: "NavBarComponent",
   methods: {
     logout() {
-      AuthService.logout();
+      AuthorizationService.logout();
       this.$store.commit("logout");
       this.$router.push("/login");
     },

@@ -1,14 +1,13 @@
 const express = require("express");
-const auctionModel = require("../../models/auctionModel.js");
+const Auction = require("../models/auctionModel.js");
 const router = express.Router();
 
-router.get("/all-auctions/:amount", (req, res) => {
-  let amount = 3;
+router.get("/all/:amount", (req, res) => {
+  let amount = 5;
   if (req.params.amount) {
     amount = req.params.amount;
   }
-  auctionModel
-    .find({ isActive: true })
+  Auction.find({ isActive: true })
     .limit(parseInt(amount))
     .exec()
     .then((result) => {
@@ -27,8 +26,7 @@ router.get("/my-auctions", (req, res) => {
       error: "Unauthorized",
     });
   } else {
-    auctionModel
-      .find({ sellerName: req.user.username })
+    Auction.find({ sellerName: req.user.username })
       .exec()
       .then((result) => {
         res.status(200).json(result);
@@ -43,8 +41,7 @@ router.get("/my-auctions", (req, res) => {
 
 router.get("/auctions/:auctionId", (req, res) => {
   const auctionId = req.params.auctionId;
-  auctionModel
-    .findOne({ _id: auctionId })
+  Auction.findOne({ _id: auctionId })
     .exec()
     .then((result) => {
       console.log(result);
@@ -63,7 +60,7 @@ router.post("/auctions", (req, res) => {
       error: "Unauthorized",
     });
   } else {
-    const auction = new auctionModel({
+    const auction = new Auction({
       name: req.body.title,
       sellerName: req.user.username,
       description: req.body.description,
@@ -120,7 +117,7 @@ router.post("/auctions", (req, res) => {
 
 router.delete("/auctions/:id", async (req, res) => {
   try {
-    const auction = await auctionModel.findByIdAndDelete(req.params.id);
+    const auction = await Auction.findByIdAndDelete(req.params.id);
     if (!auction) res.status(404).send("No item found");
     res.status(200).send();
   } catch (err) {
@@ -135,8 +132,7 @@ router.patch("/buyout/:id", async (req, res) => {
       error: "Unauthorized",
     });
   } else {
-    auctionModel
-      .findOne({ _id: auctionId })
+    Auction.findOne({ _id: auctionId })
       .exec()
       .then((result) => {
         if (result) {

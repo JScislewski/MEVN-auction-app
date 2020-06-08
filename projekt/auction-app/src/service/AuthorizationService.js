@@ -1,8 +1,8 @@
 import axios from "axios";
 
-const url = "https://localhost:5000";
+const url = "api/authentication";
 
-class AuthService {
+class AuthorizationService {
   static register(username, password) {
     return axios.post(`${url}/register`, {
       username: username,
@@ -22,4 +22,4 @@ class AuthService {
   }
 }
 
-export default AuthService;
+export default AuthorizationService;

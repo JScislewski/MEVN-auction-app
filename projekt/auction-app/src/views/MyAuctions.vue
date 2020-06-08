@@ -13,7 +13,7 @@
 
 <script>
 import AuctionsService from "../service/AuctionsService";
-import MyAuctionSpoiler from "../components/AuctionPreview";
+import MyAuctionSpoiler from "../components/AuctionPreviewComponent";
 export default {
   name: "MyAuctions",
   components: { MyAuctionSpoiler },

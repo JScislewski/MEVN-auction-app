@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const url = "https://localhost:5000";
+const url = "api/auctions";
 
 axios.defaults.withCredentials = true;
 
@@ -21,7 +21,7 @@ class AuctionsService {
   static getAuctions(amount) {
     return new Promise((resolve, reject) => {
       axios
-        .get(`${url}/all-auctions/${amount}`)
+        .get(`${url}/all/${amount}`)
         .then((res) => {
           resolve(res.data);
         })
