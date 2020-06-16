@@ -9,7 +9,7 @@
       <template
         v-if="
           this.$props.auction.sellerName === this.$store.state.user.username &&
-          isEditable()
+            isEditable()
         "
       >
         <p>
@@ -23,6 +23,12 @@
     </div>
 
     <h5 class="auction_seller">Seller: {{ auction.sellerName }}</h5>
+    <template v-if="this.auction.buyerName != null">
+      <h5>Buyer: {{ auction.buyerName }}</h5>
+    </template>
+    <template v-else>
+      <h5>Buyer: NONE</h5>
+    </template>
     <div class="spoiler_bar">
       <h2 v-if="auction.buyoutPrice">{{ auction.buyoutPrice }} zł</h2>
       <h2 v-if="auction.highestBid">{{ auction.highestBid }} zł</h2>
@@ -58,14 +64,14 @@ export default {
         .then(() => {
           this.$router.push("/");
         })
-        .catch((err) => {
+        .catch(err => {
           if (err.response.status === 401) {
             this.$store.commit("logout");
             this.$router.push("/login");
           }
         });
-    },
-  },
+    }
+  }
 };
 </script>
 

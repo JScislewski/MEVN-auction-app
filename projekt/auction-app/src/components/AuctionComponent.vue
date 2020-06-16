@@ -23,6 +23,12 @@
         </template>
       </template>
       <template v-else>
+        <template v-if="this.auction.buyerName != null">
+          <h5>Buyer: {{ auction.buyerName }}</h5>
+        </template>
+        <template v-else>
+          <h5>Buyer: NONE</h5>
+        </template>
         <h1>AUCTION ENDED</h1>
       </template>
     </div>

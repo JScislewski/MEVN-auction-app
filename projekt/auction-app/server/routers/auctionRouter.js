@@ -65,6 +65,7 @@ router.get("/my-auctions", (req, res) => {
     });
   } else {
     Auction.find({ sellerName: req.user.username })
+      .sort({ startDate: -1 })
       .exec()
       .then(result => {
         res.status(200).json(result);
