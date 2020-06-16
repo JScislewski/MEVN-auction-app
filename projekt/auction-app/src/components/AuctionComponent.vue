@@ -16,6 +16,7 @@
           <button v-on:click="buyout">BUY</button>
         </template>
         <template v-else>
+          <h5 class="auction_ends">Ends: {{ getEndsTime() }}</h5>
           <h2>{{ auction.highestBid }} zł</h2>
           <input v-model="bidPrice" type="number" step="1" />
           <button v-on:click="bid">Bid</button>
@@ -26,23 +27,25 @@
       </template>
     </div>
   </div>
-  <div v-else>
-  </div>
+  <div v-else></div>
 </template>
 
 <script>
 import AuctionsService from "../service/AuctionsService";
-import io from "socket.io-client";
+import moment from "moment";
 export default {
   name: "Auction",
   data() {
     return {
       bidPrice: null,
       auction: null,
-      socket: null,
+      socket: null
     };
   },
   methods: {
+    getEndsTime() {
+      return moment(this.auction.endsDate).format("MMMM Do YYYY, h:mm:ss a");
+    },
     isActiveBid() {
       if (
         this.auction.isActive &&
@@ -69,12 +72,12 @@ export default {
       } else {
         console.log("buyout");
         AuctionsService.buyout(this.$route.params.id)
-          .then((res) => {
+          .then(res => {
             if (res.status === 200) {
               this.$router.push("/");
             }
           })
-          .catch((err) => {
+          .catch(err => {
             console.log(err);
           });
       }
@@ -86,31 +89,34 @@ export default {
         console.log("LogOut");
       } else {
         if (this.bidPrice > this.auction.highestBid) {
-          this.socket.emit("newBid", {
+          this.$store.state.socket.emit("newBid", {
             auctionId: this.auction._id,
             bidder: this.$store.state.user.username,
-            bidPrice: this.bidPrice,
+            bidPrice: this.bidPrice
           });
           this.bidPrice = null;
         }
       }
-    },
+    }
+  },
+  checkForAuctionEnd() {
+    console.log("checkForAuctionEnd");
+    this.$store.state.socket.emit("checkForAuctionEnd", this.auction._id);
   },
   created() {
     AuctionsService.getAuction(this.$route.params.id)
-      .then((res) => {
+      .then(res => {
         this.auction = res;
         if (this.$store.state.user && this.auction.highestBid) {
-          this.socket = io(`https://${window.location.host}`);
-          this.socket.emit("joinLiveBid", {
-            auctionId: this.auction._id,
+          this.$store.state.socket.emit("joinLiveBid", {
+            auctionId: this.auction._id
           });
-          this.socket.on("bid", (data) => {
+          this.$store.state.socket.on("bid", data => {
             this.auction.highestBid = data.highestBid;
           });
         }
       })
-      .catch((err) => {
+      .catch(err => {
         console.log(err);
       });
   },
@@ -118,7 +124,7 @@ export default {
     if (this.socket) {
       this.socket.disconnect();
     }
-  },
+  }
 };
 </script>
 
