@@ -3,8 +3,8 @@
     <p class="error" v-for="(error, idx) in this.errors" :key="idx">
       {{ error }}
     </p>
-    <label for="username">Username:</label>
-    <input type="text" v-model="username" id="username" value="username" />
+    <label for="usernameInput">Username:</label>
+    <input type="text" v-model="username" id="usernameInput" value="username" />
     <label for="username2">Repeat username:</label>
     <input type="text" v-model="username2" id="username2" value="username" />
     <label for="password">Password:</label>
@@ -31,7 +31,7 @@ export default {
       username2: null,
       password: null,
       password2: null,
-      errors: [],
+      errors: []
     };
   },
   methods: {
@@ -47,18 +47,18 @@ export default {
 
       if (this.errors.length === 0) {
         AuthService.register(this.username, this.password)
-          .then((res) => {
+          .then(res => {
             if (res.status === 201) {
               this.$router.push("/login");
             }
           })
-          .catch((err) => {
+          .catch(err => {
             if (err.response.status === 409) {
               this.errors.push(err.response.data.message);
             }
           });
       }
-    },
-  },
+    }
+  }
 };
 </script>
