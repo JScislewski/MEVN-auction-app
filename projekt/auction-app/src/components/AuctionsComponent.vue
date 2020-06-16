@@ -8,9 +8,13 @@
     >
       <AuctionPreviewComponent :auction="auction" />
     </div>
-    <button v-if="this.amount <= auctions.length" v-on:click="loadMore()">
-      show more!
+    <button v-if="this.page > 1" v-on:click="previousPage()">
+      Previous page
     </button>
+    <button v-if="this.page <= auctions.length" v-on:click="nextPage()">
+      Next page
+    </button>
+    <h2>Page:{{ this.page }}</h2>
   </div>
 </template>
 
@@ -23,27 +27,35 @@ export default {
   components: { AuctionPreviewComponent },
   data() {
     return {
-      amount: 5,
-      auctions: [],
+      page: 1,
+      auctions: []
     };
   },
   methods: {
-    loadMore() {
-      this.amount += 5;
-      AuctionsService.getAuctions(this.amount)
-        .then((res) => {
+    previousPage() {
+      this.page -= 1;
+      AuctionsService.getAuctions(this.page)
+        .then(res => {
           this.auctions = res;
         })
         .catch();
     },
+    nextPage() {
+      this.page += 1;
+      AuctionsService.getAuctions(this.page)
+        .then(res => {
+          this.auctions = res;
+        })
+        .catch();
+    }
   },
   created() {
-    AuctionsService.getAuctions(this.amount)
-      .then((res) => {
+    AuctionsService.getAuctions(1)
+      .then(res => {
         this.auctions = res;
       })
       .catch();
-  },
+  }
 };
 </script>
 

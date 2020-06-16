@@ -12,6 +12,7 @@
         <button v-on:click="getAuction">Buy now</button>
       </template>
       <template v-else>
+        <h5 class="auction_ends">Ends: {{ getEndsTime() }}</h5>
         <h2>{{ auction.highestBid }}zł</h2>
         <button v-on:click="getAuction">Bid</button>
       </template>
@@ -20,14 +21,19 @@
 </template>
 
 <script>
+import moment from "moment";
+
 export default {
   name: "AuctionPreviewComponent",
   props: ["auction"],
   methods: {
+    getEndsTime() {
+      return moment(this.auction.endsDate).format("MMMM Do YYYY, h:mm:ss a");
+    },
     getAuction() {
       this.$router.push("/auction/" + this.$props.auction._id);
-    },
-  },
+    }
+  }
 };
 </script>
 <style scoped lang="scss">

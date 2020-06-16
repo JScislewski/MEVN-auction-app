@@ -7,7 +7,7 @@
     </div>
 
     <p><label for="title">Title:</label></p>
-    <p><input type="text" v-model="title" id="title" /></p>
+    <p><input type="text" v-model="name" id="title" /></p>
 
     <p>
       <label for="description">Description:</label>
@@ -50,56 +50,77 @@
       v-if="auctionType === 'Bid'"
       type="number"
     />
-    <p>
-      <label v-if="auctionType === 'Bid'" for="ends_date">Auction ends: </label>
+    <label v-if="auctionType === 'Bid'" for="ends_date">Auction ends: </label>
+    <div class="date">
       <input
         id="ends_date"
+        :min="getFormatedDate()"
         type="date"
         v-if="auctionType === 'Bid'"
-        v-model="ends"
+        v-model="endsDate"
+        v-bind:class="{ err: errors.date }"
       />
-    </p>
+      <input
+        id="hour_date"
+        type="time"
+        v-if="auctionType === 'Bid'"
+        v-model="endsTime"
+        v-bind:class="{ err: errors.date }"
+      />
+    </div>
     <button v-on:click="createAuction">CREATE</button>
   </div>
 </template>
 
 <script>
 import AuctionsService from "../service/AuctionsService";
+
 export default {
   name: "NewAuction",
   data() {
     return {
-      title: null,
+      name: null,
       description: null,
       auctionType: null,
       buyoutPrice: null,
       startingBid: null,
       ends: null,
       errors: [],
+      endsDate: null,
+      endsTime: null
     };
   },
   methods: {
+    getFormatedDate() {
+      const today = new Date();
+      return `${today.getFullYear()}-${("0" + (today.getMonth() + 1)).slice(
+        -2
+      )}-${("0" + today.getDate()).slice(-2)}`;
+    },
     async createAuction() {
       this.errors = [];
       let auction = {
-        title: this.title,
+        name: this.name,
         description: this.description,
-        ends: this.ends,
+        endsDate: null,
+        endsTime: null,
         buyoutPrice: null,
-        startingBid: null,
+        startingBid: null
       };
       if (this.auctionType === "Buyout") {
         auction.buyoutPrice = Math.round(this.buyoutPrice * 100) / 100;
       } else {
         auction.startingBid = Math.round(this.startingBid * 100) / 100;
+        auction.endsDate = new Date(`${this.endsDate} ${this.endsTime}`);
+        console.log(auction.endsDate);
       }
       AuctionsService.createAuction(auction)
-        .then((res) => {
+        .then(res => {
           if (res.status === 201) {
             this.$router.push("/");
           }
         })
-        .catch((err) => {
+        .catch(err => {
           if (err.response.status === 409) {
             this.errors.push(err.response.data.message);
           }
@@ -108,8 +129,8 @@ export default {
             this.$router.push("/login");
           }
         });
-    },
-  },
+    }
+  }
 };
 </script>
 
