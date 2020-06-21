@@ -1,5 +1,6 @@
 import Vue from "vue";
 import Vuex from "vuex";
+import io from "socket.io-client";
 import createPersistedState from "vuex-persistedstate";
 
 Vue.use(Vuex);
@@ -7,21 +8,23 @@ Vue.use(Vuex);
 const store = new Vuex.Store({
   plugins: [
     createPersistedState({
-      storage: window.sessionStorage,
-    }),
+      storage: window.sessionStorage
+    })
   ],
   state: {
-    user: null,
+    socket: null,
+    socketURI: `https://${window.location.host}`,
+    user: null
   },
   mutations: {
     login(state, user) {
+      state.socket = io(state.socketURI);
       state.user = user;
     },
     logout(state) {
-      sessionStorage.clear();
       state.user = null;
-    },
-  },
+    }
+  }
 });
 
 export default store;

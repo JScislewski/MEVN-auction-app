@@ -31,7 +31,6 @@
       </div>
     </template>
     <template v-else>
-      <h3>You have no messages, sorry.</h3>
     </template>
   </div>
 </template>

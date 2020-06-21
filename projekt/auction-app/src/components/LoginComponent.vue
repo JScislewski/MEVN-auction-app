@@ -37,9 +37,7 @@ export default {
           }
         })
         .catch((err) => {
-          if (err.response.status === 401) {
-            this.errors.push(err.response.data.message);
-          }
+       console.log(err);
         });
     },
   },

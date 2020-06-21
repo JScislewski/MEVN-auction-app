@@ -5,7 +5,6 @@ const mongoose = require("mongoose");
 let bidQueue = {};
 
 const queueBid = data => {
-  console.log("queued");
   if (Array.isArray(bidQueue[data.auctionId])) {
     bidQueue[data.auctionId].push(data);
   } else {
@@ -15,7 +14,7 @@ const queueBid = data => {
 };
 
 const resolveQueue = (auctionId, io) => {
-  console.log("resolving");
+  console.log("resolvingQueue");
   if (bidQueue[auctionId].length > 0) {
     console.log("resolving with next in queue");
     bid(bidQueue[auctionId][0], io);
