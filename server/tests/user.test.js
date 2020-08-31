@@ -23,3 +23,17 @@ test("Should find user by id", async () => {
       expect(response.body.name).toBe("Jan");
     });
 });
+
+test("Should signup a new user", async () => {
+  const oldUsersCount = await User.countDocuments();
+  await request(app)
+    .post("/users")
+    .send({
+      name: "Andrew",
+      email: "andrew@example.com",
+      password: "MyPass777!",
+    })
+    .expect(201);
+  const newUsersCount = await User.countDocuments();
+  expect(newUsersCount).toBe(oldUsersCount + 1);
+});
