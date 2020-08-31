@@ -45,7 +45,7 @@ export default {
     return {
       bidPrice: null,
       auction: null,
-      socket: null
+      socket: null,
     };
   },
   methods: {
@@ -78,12 +78,12 @@ export default {
       } else {
         console.log("buyout");
         AuctionsService.buyout(this.$route.params.id)
-          .then(res => {
+          .then((res) => {
             if (res.status === 200) {
               this.$router.push("/");
             }
           })
-          .catch(err => {
+          .catch((err) => {
             console.log(err);
           });
       }
@@ -98,12 +98,12 @@ export default {
           this.$store.state.socket.emit("newBid", {
             auctionId: this.auction._id,
             bidder: this.$store.state.user.username,
-            bidPrice: this.bidPrice
+            bidPrice: this.bidPrice,
           });
           this.bidPrice = null;
         }
       }
-    }
+    },
   },
   checkForAuctionEnd() {
     console.log("checkForAuctionEnd");
@@ -111,18 +111,18 @@ export default {
   },
   created() {
     AuctionsService.getAuction(this.$route.params.id)
-      .then(res => {
+      .then((res) => {
         this.auction = res;
         if (this.$store.state.user && this.auction.highestBid) {
           this.$store.state.socket.emit("joinLiveBid", {
-            auctionId: this.auction._id
+            auctionId: this.auction._id,
           });
-          this.$store.state.socket.on("bid", data => {
+          this.$store.state.socket.on("bid", (data) => {
             this.auction.highestBid = data.highestBid;
           });
         }
       })
-      .catch(err => {
+      .catch((err) => {
         console.log(err);
       });
   },
@@ -130,7 +130,7 @@ export default {
     if (this.socket) {
       this.socket.disconnect();
     }
-  }
+  },
 };
 </script>
 

@@ -8,13 +8,13 @@ Vue.use(Vuex);
 const store = new Vuex.Store({
   plugins: [
     createPersistedState({
-      storage: window.sessionStorage
-    })
+      storage: window.sessionStorage,
+    }),
   ],
   state: {
     socket: null,
     socketURI: `https://${window.location.host}`,
-    user: null
+    user: null,
   },
   mutations: {
     login(state, user) {
@@ -23,8 +23,8 @@ const store = new Vuex.Store({
     },
     logout(state) {
       state.user = null;
-    }
-  }
+    },
+  },
 });
 
 export default store;

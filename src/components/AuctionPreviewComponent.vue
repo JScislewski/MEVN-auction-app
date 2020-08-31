@@ -32,8 +32,8 @@ export default {
     },
     getAuction() {
       this.$router.push("/auction/" + this.$props.auction._id);
-    }
-  }
+    },
+  },
 };
 </script>
 <style scoped lang="scss">

@@ -30,8 +30,7 @@
         <button class="send_msg_btn" v-on:click="sendMsg">SEND</button>
       </div>
     </template>
-    <template v-else>
-    </template>
+    <template v-else> </template>
   </div>
 </template>
 

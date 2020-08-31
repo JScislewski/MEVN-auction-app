@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <NavBarComponent />
-    <router-view/>
+    <router-view />
   </div>
 </template>
 
@@ -17,6 +17,6 @@
 <script>
 import NavBarComponent from "./components/NavBarComponent";
 export default {
-  components: { NavBarComponent }
+  components: { NavBarComponent },
 };
 </script>

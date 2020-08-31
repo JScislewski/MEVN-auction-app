@@ -83,7 +83,8 @@ body {
   font-size: 18px;
 }
 
-.nav > .nav-links > a, #username {
+.nav > .nav-links > a,
+#username {
   display: inline-block;
   padding: 13px 10px 13px 10px;
   text-decoration: none;

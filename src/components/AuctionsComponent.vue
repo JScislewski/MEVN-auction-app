@@ -11,7 +11,7 @@
     <button v-if="this.page > 1" v-on:click="previousPage()">
       Previous page
     </button>
-    <button v-if="!auctions.length<3" v-on:click="nextPage()">
+    <button v-if="!auctions.length < 3" v-on:click="nextPage()">
       Next page
     </button>
     <h2>Page:{{ this.page }}</h2>
@@ -28,14 +28,14 @@ export default {
   data() {
     return {
       page: 1,
-      auctions: []
+      auctions: [],
     };
   },
   methods: {
     previousPage() {
       this.page -= 1;
       AuctionsService.getAuctions(this.page)
-        .then(res => {
+        .then((res) => {
           this.auctions = res;
         })
         .catch();
@@ -43,19 +43,19 @@ export default {
     nextPage() {
       this.page += 1;
       AuctionsService.getAuctions(this.page)
-        .then(res => {
+        .then((res) => {
           this.auctions = res;
         })
         .catch();
-    }
+    },
   },
   created() {
     AuctionsService.getAuctions(1)
-      .then(res => {
+      .then((res) => {
         this.auctions = res;
       })
       .catch();
-  }
+  },
 };
 </script>
 

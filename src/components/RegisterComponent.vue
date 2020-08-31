@@ -31,7 +31,7 @@ export default {
       username2: null,
       password: null,
       password2: null,
-      errors: []
+      errors: [],
     };
   },
   methods: {
@@ -47,18 +47,18 @@ export default {
 
       if (this.errors.length === 0) {
         AuthService.register(this.username, this.password)
-          .then(res => {
+          .then((res) => {
             if (res.status === 201) {
               this.$router.push("/login");
             }
           })
-          .catch(err => {
+          .catch((err) => {
             if (err.response.status === 409) {
               this.errors.push(err.response.data.message);
             }
           });
       }
-    }
-  }
+    },
+  },
 };
 </script>

@@ -9,7 +9,7 @@
       <template
         v-if="
           this.$props.auction.sellerName === this.$store.state.user.username &&
-            isEditable()
+          isEditable()
         "
       >
         <p>
@@ -64,14 +64,14 @@ export default {
         .then(() => {
           this.$router.push("/");
         })
-        .catch(err => {
+        .catch((err) => {
           if (err.response.status === 401) {
             this.$store.commit("logout");
             this.$router.push("/login");
           }
         });
-    }
-  }
+    },
+  },
 };
 </script>
 

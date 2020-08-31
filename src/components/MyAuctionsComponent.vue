@@ -38,18 +38,18 @@ export default {
 };
 </script>
 <style scoped lang="scss">
-  .auctions_container {
-    max-width: 400px;
-    margin: 0 auto;
-  }
-  button {
-    cursor: pointer;
-    padding: 10px;
-    background-color: green;
-    border-radius: 10px;
-    color: white;
-    font-weight: bold;
-    text-decoration: none;
-    border: none;
-  }
+.auctions_container {
+  max-width: 400px;
+  margin: 0 auto;
+}
+button {
+  cursor: pointer;
+  padding: 10px;
+  background-color: green;
+  border-radius: 10px;
+  color: white;
+  font-weight: bold;
+  text-decoration: none;
+  border: none;
+}
 </style>

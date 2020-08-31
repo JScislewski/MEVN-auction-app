@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 
 let bidQueue = {};
 
-const queueBid = data => {
+const queueBid = (data) => {
   if (Array.isArray(bidQueue[data.auctionId])) {
     bidQueue[data.auctionId].push(data);
   } else {
@@ -28,7 +28,7 @@ const bid = (data, io) => {
   console.log(data);
   Auction.findOne({ _id: data.auctionId })
     .exec()
-    .then(result => {
+    .then((result) => {
       data.bidPrice = Math.round(data.bidPrice * 100) / 100;
       if (data.bidPrice > result.highestBid && result.isActive) {
         if (new Date(result.endsDate).getTime() < new Date().getTime()) {
@@ -50,64 +50,64 @@ const bid = (data, io) => {
               io.sockets.in(result._id).emit("bid", {
                 highestBid: result.highestBid,
                 highestBidder: result.highestBidder,
-                _id: result._id
+                _id: result._id,
               });
               resolveQueue(data.auctionId, io);
             })
-            .catch(err => {
+            .catch((err) => {
               console.log(err);
               bidQueue[data.auctionId].shift();
             });
         }
       }
     })
-    .catch(err => {
+    .catch((err) => {
       console.log(err);
       bidQueue[data.auctionId].shift();
     });
   bidQueue[data.auctionId].shift();
 };
 
-module.exports = io => {
-  io.on("connection", socket => {
+module.exports = (io) => {
+  io.on("connection", (socket) => {
     console.log("user connected!");
-    socket.on("privateChat", data => {
+    socket.on("privateChat", (data) => {
       console.log(`${data.from} joined private chat with ${data.to}`);
       for (let i = 1; i < Object.keys(socket.rooms).length; i++) {
         socket.leave(socket.rooms[Object.keys(socket.rooms)[i]]);
       }
       socket.join([data.from, data.to].sort().join(""));
     });
-    socket.on("privateMsg", data => {
+    socket.on("privateMsg", (data) => {
       const message = new Message({
         _id: new mongoose.Types.ObjectId(),
         from: data.from,
         to: data.to,
         sent: new Date().getDate(),
-        message: data.msg
+        message: data.msg,
       });
       message
         .save()
-        .then(result => {
+        .then((result) => {
           console.log(result);
           io.sockets
             .in([result.from, result.to].sort().join(""))
             .emit("msg", result);
         })
-        .catch(err => {
+        .catch((err) => {
           console.log(err);
         });
     });
-    socket.on("joinLiveBid", data => {
+    socket.on("joinLiveBid", (data) => {
       for (let i = 1; i < Object.keys(socket.rooms).length; i++) {
         socket.leave(socket.rooms[Object.keys(socket.rooms)[i]]);
       }
       socket.join(data.auctionId);
     });
-    socket.on("watchLiveBid", data => {
+    socket.on("watchLiveBid", (data) => {
       socket.join(data.auctionId);
     });
-    socket.on("newBid", data => {
+    socket.on("newBid", (data) => {
       queueBid(data);
       if (bidQueue[data.auctionId].length === 1) {
         bid(data, io);

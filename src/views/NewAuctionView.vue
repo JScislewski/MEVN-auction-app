@@ -87,7 +87,7 @@ export default {
       ends: null,
       errors: [],
       endsDate: null,
-      endsTime: null
+      endsTime: null,
     };
   },
   methods: {
@@ -105,7 +105,7 @@ export default {
         endsDate: null,
         endsTime: null,
         buyoutPrice: null,
-        startingBid: null
+        startingBid: null,
       };
       if (this.auctionType === "Buyout") {
         auction.buyoutPrice = Math.round(this.buyoutPrice * 100) / 100;
@@ -115,12 +115,12 @@ export default {
         console.log(auction.endsDate);
       }
       AuctionsService.createAuction(auction)
-        .then(res => {
+        .then((res) => {
           if (res.status === 201) {
             this.$router.push("/");
           }
         })
-        .catch(err => {
+        .catch((err) => {
           if (err.response.status === 409) {
             this.errors.push(err.response.data.message);
           }
@@ -129,8 +129,8 @@ export default {
             this.$router.push("/login");
           }
         });
-    }
-  }
+    },
+  },
 };
 </script>
 

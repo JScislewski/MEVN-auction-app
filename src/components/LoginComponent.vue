@@ -37,7 +37,7 @@ export default {
           }
         })
         .catch((err) => {
-       console.log(err);
+          console.log(err);
         });
     },
   },
@@ -58,7 +58,8 @@ export default {
   font-size: 16px;
 
   button,
-  input,textarea {
+  input,
+  textarea {
     color: black;
     padding: 10px;
     border-radius: 10px;

@@ -9,10 +9,10 @@ class AuctionsService {
     return new Promise((resolve, reject) => {
       axios
         .get(`${url}/auctions/${id}`)
-        .then(res => {
+        .then((res) => {
           resolve(res.data);
         })
-        .catch(err => {
+        .catch((err) => {
           reject(err);
         });
     });
@@ -22,10 +22,10 @@ class AuctionsService {
     return new Promise((resolve, reject) => {
       axios
         .get(`${url}/all/${page}`)
-        .then(res => {
+        .then((res) => {
           resolve(res.data);
         })
-        .catch(err => {
+        .catch((err) => {
           reject(err);
         });
     });
@@ -35,10 +35,10 @@ class AuctionsService {
     return new Promise((resolve, reject) => {
       axios
         .get(`${url}/my-auctions`)
-        .then(res => {
+        .then((res) => {
           resolve(res.data);
         })
-        .catch(err => {
+        .catch((err) => {
           reject(err);
         });
     });
@@ -47,10 +47,10 @@ class AuctionsService {
     return new Promise((resolve, reject) => {
       axios
         .get(`${url}/my-bids`, { withCredentials: true })
-        .then(res => {
+        .then((res) => {
           resolve(res.data);
         })
-        .catch(err => {
+        .catch((err) => {
           reject(err);
         });
     });
@@ -63,10 +63,10 @@ class AuctionsService {
     return new Promise((resolve, reject) => {
       axios
         .delete(`${url}/${id}`)
-        .then(res => {
+        .then((res) => {
           resolve(res.data);
         })
-        .catch(err => {
+        .catch((err) => {
           reject(err);
         });
     });
