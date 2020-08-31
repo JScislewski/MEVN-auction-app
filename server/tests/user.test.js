@@ -17,7 +17,7 @@ test("Should display all users", async () => {
 
 test("Should find user by id", async () => {
   await request(app)
-    .get("/users/", userOneId)
+    .get(`/users/${userOneId}`)
     .expect(200)
     .then((response) => {
       expect(response.body.name).toBe("Jan");
