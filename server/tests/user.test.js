@@ -44,5 +44,23 @@ test("Should throw duplicate name error", async () => {
       name: "Jan",
       password: "superhaslo123",
     })
-    .expect(400);
+    .expect(400)
+    .then((response) => {
+      expect(response.body.code).toBe(11000);
+    });
+});
+
+test("Should throw too short password password", async () => {
+  await request(app)
+    .post("/users")
+    .send({
+      name: "janusz",
+      password: "pass",
+    })
+    .expect(400)
+    .then((response) => {
+      expect(response.body.errors.password.message).toBe(
+        "The password must have a least 7 characters."
+      );
+    });
 });
