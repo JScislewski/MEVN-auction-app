@@ -29,11 +29,20 @@ test("Should signup a new user", async () => {
   await request(app)
     .post("/users")
     .send({
-      name: "Andrew",
-      email: "andrew@example.com",
+      name: "Henryk",
       password: "MyPass777!",
     })
     .expect(201);
   const newUsersCount = await User.countDocuments();
   expect(newUsersCount).toBe(oldUsersCount + 1);
+});
+
+test("Should throw duplicate name error", async () => {
+  await request(app)
+    .post("/users")
+    .send({
+      name: "jan",
+      password: "superhaslo123",
+    })
+    .expect(400);
 });
