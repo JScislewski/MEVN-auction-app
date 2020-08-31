@@ -41,7 +41,7 @@ test("Should throw duplicate name error", async () => {
   await request(app)
     .post("/users")
     .send({
-      name: "jan",
+      name: "Jan",
       password: "superhaslo123",
     })
     .expect(400);
