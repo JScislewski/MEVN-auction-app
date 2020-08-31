@@ -1,5 +1,8 @@
 /* eslint-disable no-undef */
 const request = require("supertest");
+const mongoose = require("mongoose");
+const bcrypt = require("bcryptjs");
+
 const app = require("../app");
 const User = require("../models/user");
 const { userOneId, userOne, setupDatabase } = require("./fixtures/db");
@@ -63,4 +66,19 @@ test("Should throw too short password password", async () => {
         "The password must have a least 7 characters."
       );
     });
+});
+
+test("Should encrypt password", async () => {
+  const id = new mongoose.Types.ObjectId();
+  await request(app)
+    .post("/users")
+    .send({
+      _id: id,
+      name: "janusz",
+      password: "mypassword",
+    })
+    .expect(201);
+  const user = await User.findOne(id);
+  const isMatch = await bcrypt.compare("mypassword", user.password);
+  expect(isMatch).toBe(true);
 });
