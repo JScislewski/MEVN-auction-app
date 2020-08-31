@@ -14,3 +14,12 @@ test("Should display all users", async () => {
       expect(response.body.length).toBe(2);
     });
 });
+
+test("Should find user by id", async () => {
+  await request(app)
+    .get("/users/", userOneId)
+    .expect(200)
+    .then((response) => {
+      expect(response.body.name).toBe("Jan");
+    });
+});
