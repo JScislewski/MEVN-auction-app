@@ -32,7 +32,7 @@ const auctionSchema = new mongoose.Schema({
   },
   isActive: {
     type: Boolean,
-    requierd: true,
+    default: true,
   },
   price: {
     type: Number,
