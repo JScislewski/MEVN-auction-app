@@ -1,22 +1,9 @@
 <template>
   <div id="app">
-    <app-header></app-header>
-    <router-view></router-view>
-    <app-footer></app-footer>
+    <NavBarComponent />
+    <router-view />
   </div>
 </template>
-
-<script>
-import Header from "./components/layout/Header";
-import Footer from "./components/layout/Footer";
-export default {
-  name: "App",
-  components: {
-    appHeader: Header,
-    appFooter: Footer,
-  },
-};
-</script>
 
 <style>
 #app {
@@ -25,6 +12,11 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
 }
 </style>
+<script>
+import NavBarComponent from "./components/NavBarComponent";
+export default {
+  components: { NavBarComponent },
+};
+</script>

@@ -1,4 +1,4 @@
-# mevn-auction-app
+# auction-app
 
 ## Project setup
 
