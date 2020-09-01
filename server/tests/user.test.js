@@ -5,7 +5,7 @@ const bcrypt = require("bcryptjs");
 
 const app = require("../app");
 const User = require("../models/user");
-const { userOneId, userOne, setupDatabase } = require("./fixtures/db");
+const { userOneId, setupDatabase } = require("./fixtures/db");
 
 beforeEach(setupDatabase);
 
