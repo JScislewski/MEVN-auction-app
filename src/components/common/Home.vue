@@ -1,7 +1,5 @@
 <template>
-  <div class="footer">
-    <h1>FOOTER</h1>
-  </div>
+  <h1>Home component</h1>
 </template>
 
 <script>
