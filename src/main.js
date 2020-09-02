@@ -3,10 +3,9 @@ import App from "./App.vue";
 import router from "./router/index";
 import store from "./store/index";
 import VueCookies from "vue-cookies";
-
 Vue.use(VueCookies);
-Vue.config.productionTip = false;
 
+Vue.config.productionTip = false;
 new Vue({
   router,
   store,

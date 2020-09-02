@@ -1,18 +1,11 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import io from "socket.io-client";
-import createPersistedState from "vuex-persistedstate";
 import router from "../router/index";
 
 Vue.use(Vuex);
 
 const store = new Vuex.Store({
-  plugins: [
-    createPersistedState({
-      storage: window.localStorage,
-      paths: ["unreadMessagesCount"],
-    }),
-  ],
   state: {
     newMessage: false,
     socket: null,

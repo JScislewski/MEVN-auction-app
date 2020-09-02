@@ -9,10 +9,13 @@
     <h5 class="auction_highest_bidder">
       highest bidder: {{ auction.highestBidder }}
     </h5>
-    <div class="spoiler_bar">
+    <div v-if="auction.isActive" class="spoiler_bar">
       <h2>{{ auction.highestBid }}zł</h2>
       <input v-model="bidPrice" type="number" step="0.01" />
       <button v-on:click="bid()">Bid</button>
+    </div>
+    <div v-else>
+      <h2>Buyer: {{ auction.buyer }}</h2>
     </div>
   </div>
 </template>

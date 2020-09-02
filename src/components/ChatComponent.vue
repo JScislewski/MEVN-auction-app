@@ -146,7 +146,7 @@ export default {
       display: inline-block;
     }
     .sender {
-      background-color: greenyellow;
+      background-color: #c9b0d4;
       align-self: flex-end;
       text-align: right;
     }
