@@ -25,6 +25,7 @@ export default {
   },
   methods: {},
   created() {
+    this.$store.state.isOutbid = false;
     AuctionsService.getMyBids()
       .then((res) => {
         this.auctions = res;

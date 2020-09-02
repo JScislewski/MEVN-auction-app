@@ -26,6 +26,9 @@
         <p class="new_messages" v-if="this.$store.state.unreadMessagesOverall">
           {{ this.$store.state.unreadMessagesOverall }}
         </p>
+        <span class="outbid_alert" v-if="this.$store.state.isOutbid">
+          OUTBIDDED
+        </span>
         <a v-on:click="logout()">LOGOUT</a>
       </template>
       <div id="username" v-if="this.$store.state.user !== null">
@@ -57,6 +60,10 @@ export default {
 body {
   margin: 0px;
   font-family: "segoe ui";
+}
+
+.outbid_alert {
+  color: #c1666b;
 }
 
 .nav {

@@ -41,12 +41,17 @@ const bid = (data, io) => {
           if (!result.bidders.includes(data.bidder)) {
             result.bidders.push(data.bidder);
           }
+          const oldHighestBidder = result.highestBidder;
           result.highestBid = data.bidPrice;
           result.highestBidder = data.bidder;
           result
             .save()
             .then(() => {
               console.log("success");
+              if (oldHighestBidder !== result.highestBidder) {
+                console.log(`emiting outbid to ${oldHighestBidder}`);
+                io.sockets.in(oldHighestBidder).emit("outbid");
+              }
               io.sockets.in(result._id).emit("bid", {
                 highestBid: result.highestBid,
                 highestBidder: result.highestBidder,
@@ -71,6 +76,12 @@ const bid = (data, io) => {
 module.exports = (io) => {
   io.on("connection", (socket) => {
     console.log("user connected!");
+
+    socket.on("notify", (username) => {
+      socket["username"] = username;
+      socket.join(username);
+    });
+
     socket.on("privateChat", (data) => {
       console.log(`${data.from} joined private chat with ${data.to}`);
       for (let i = 1; i < Object.keys(socket.rooms).length; i++) {

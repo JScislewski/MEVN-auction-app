@@ -2,6 +2,7 @@ import Vue from "vue";
 import Vuex from "vuex";
 import io from "socket.io-client";
 import createPersistedState from "vuex-persistedstate";
+import router from "../router/index";
 
 Vue.use(Vuex);
 
@@ -13,6 +14,7 @@ const store = new Vuex.Store({
     }),
   ],
   state: {
+    isOutbid: false,
     currentRecipient: null,
     unreadMessagesCount: {},
     unreadMessagesOverall: 0,
@@ -33,6 +35,12 @@ const store = new Vuex.Store({
       state.user = user;
       console.log(state.unreadMessagesCount);
       console.log(state.unreadMessagesOverall);
+      state.socket.on("outbid", () => {
+        console.log("YOU GOT OUTBIDDED");
+        if (router.currentRoute.name !== "Current auctions") {
+          state.isOutbid = true;
+        }
+      });
     },
     logout(state) {
       if (state.socket) {

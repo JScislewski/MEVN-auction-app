@@ -33,6 +33,9 @@ const auctionSchema = mongoose.Schema({
   highestBidder: {
     type: String,
   },
+  oldHighestBidder: {
+    type: String,
+  },
   startDate: {
     type: Date,
   },
