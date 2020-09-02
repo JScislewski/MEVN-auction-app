@@ -4,6 +4,15 @@ const mongoose = require("mongoose");
 
 let bidQueue = {};
 
+const cleanRooms = async (socket) => {
+  for (let i = 0; i < Object.keys(socket.rooms).length; i++) {
+    const room = socket.rooms[Object.keys(socket.rooms)[i]];
+    if (room !== socket["username"]) {
+      await socket.leave(room);
+    }
+  }
+};
+
 const queueBid = (data) => {
   if (Array.isArray(bidQueue[data.auctionId])) {
     bidQueue[data.auctionId].push(data);
@@ -79,7 +88,9 @@ module.exports = (io) => {
 
     socket.on("privateChat", (data) => {
       console.log(`${data.from} joined private chat with ${data.to}`);
-      socket.join([data.from, data.to].sort().join(""));
+      cleanRooms(socket).then(() => {
+        socket.join([data.from, data.to].sort().join(""));
+      });
     });
     socket.on("privateMsg", (data) => {
       const message = new Message({
@@ -104,7 +115,9 @@ module.exports = (io) => {
         });
     });
     socket.on("joinLiveBid", (data) => {
-      socket.join(data.auctionId);
+      cleanRooms(socket).then(() => {
+        socket.join(data.auctionId);
+      });
     });
     socket.on("watchLiveBid", (data) => {
       socket.join(data.auctionId);

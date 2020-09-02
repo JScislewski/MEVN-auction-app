@@ -16,8 +16,8 @@ const store = new Vuex.Store({
   state: {
     newMessage: false,
     socket: null,
-    socketURI: "https://localhost:3000",
-    //socketURI: `https://${window.location.host}`,
+    //socketURI: "https://localhost:3000",
+    socketURI: `https://${window.location.host}`,
     user: null,
   },
   mutations: {

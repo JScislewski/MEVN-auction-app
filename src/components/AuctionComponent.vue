@@ -3,7 +3,7 @@
     <p class="live_bid" v-if="isActiveBid()">ACTIVE</p>
     <p>Title: {{ this.auction.name }}</p>
     <p>
-      Creator:{{ this.auction.sellerName }}
+      Seller: {{ this.auction.sellerName }}
       <button v-if="!isSeller()" v-on:click="openChat" class="chatButton">
         chat
       </button>

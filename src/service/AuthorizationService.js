@@ -1,7 +1,5 @@
 import axios from "axios";
 
-//const url = "http://localhost:3000/api/authentication";
-
 const url = "api/authentication";
 
 class AuthorizationService {

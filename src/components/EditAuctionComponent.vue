@@ -1,11 +1,5 @@
 <template>
   <div v-if="this.auction" class="auction_form">
-    <div class="errors_container">
-      <p class="error" v-for="(error, idx) in this.errors" :key="idx">
-        {{ error }}
-      </p>
-    </div>
-
     <label for="title">Title:</label>
     <input type="text" v-model="auction.name" id="title" />
     <label for="description">Description:</label>
@@ -29,6 +23,11 @@
       />
     </div>
     <button v-on:click="editAuction">SAVE CHANGES</button>
+    <div class="errors_container">
+      <p class="error" v-for="(error, idx) in this.errors" :key="idx">
+        {{ error }}
+      </p>
+    </div>
   </div>
 </template>
 

@@ -102,6 +102,7 @@ export default {
       let auction = {
         name: this.name,
         description: this.description,
+        sellerName: this.$store.state.user.username,
         endsDate: null,
         endsTime: null,
         buyoutPrice: null,

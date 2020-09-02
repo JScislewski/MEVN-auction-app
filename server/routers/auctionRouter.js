@@ -134,7 +134,7 @@ router.post("/auctions", (req, res) => {
   } else {
     const auction = new Auction({
       name: req.body.name,
-      sellerName: req.user.username,
+      sellerName: req.body.sellerName,
       description: req.body.description,
       buyoutPrice: req.body.buyoutPrice,
       startingBid: req.body.startingBid,
@@ -162,7 +162,7 @@ router.post("/auctions", (req, res) => {
       auction.startingBid &&
       new Date(auction.ends).getTime() <= new Date().getTime()
     ) {
-      errors.push("Auction has to end in the future :).");
+      errors.push("Auction has to end in the future.");
     }
     if (errors.length === 0) {
       auction

@@ -40,7 +40,7 @@ app.use(
  */
 const path = require("path");
 const publicDirectoryPath = path.join(__dirname, "../dist");
-//app.use(express.static(publicDirectoryPath));
+app.use(express.static(publicDirectoryPath));
 
 /**
  * -------------- PASSPORT AUTHENTICATION ----------------

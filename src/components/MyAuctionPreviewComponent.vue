@@ -9,7 +9,7 @@
       <template
         v-if="
           this.$props.auction.sellerName === this.$store.state.user.username &&
-          isEditable()
+            isEditable()
         "
       >
         <p>

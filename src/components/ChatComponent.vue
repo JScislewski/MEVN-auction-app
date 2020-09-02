@@ -56,12 +56,6 @@ export default {
     },
     joinChat(to) {
       this.currentRecipient = to;
-      if (this.$store.state.unreadMessagesCount[to]) {
-        this.$store.state.unreadMessagesOverall -= this.$store.state.unreadMessagesCount[
-          to
-        ];
-        this.$store.state.unreadMessagesCount[to] = 0;
-      }
       this.getMessages();
       this.$store.state.socket.emit("privateChat", {
         from: this.$store.state.user.username,
