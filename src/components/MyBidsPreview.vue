@@ -33,7 +33,7 @@ export default {
         this.$router.push("/login");
       } else {
         if (this.bidPrice > this.$props.auction.highestBid) {
-          this.socket.emit("newBid", {
+          this.$store.state.socket.emit("newBid", {
             auctionId: this.$props.auction._id,
             bidder: this.$store.state.user.username,
             bidPrice: this.bidPrice,
@@ -44,15 +44,15 @@ export default {
     },
   },
   created() {
-    this.socket.emit("watchLiveBid", {
+    this.$store.state.socket.emit("watchLiveBid", {
       auctionId: this.$props.auction._id,
     });
-    this.socket.on("bid", (data) => {
+    this.$store.state.socket.on("bid", (data) => {
       if (this.$props.auction._id === data._id) {
         this.$props.auction.highestBid = data.highestBid;
       }
     });
-    this.socket.on("sold", () => {
+    this.$store.state.socket.on("sold", () => {
       this.$props.auction.isActive = false;
     });
   },

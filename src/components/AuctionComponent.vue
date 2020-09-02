@@ -45,7 +45,6 @@ export default {
     return {
       bidPrice: null,
       auction: null,
-      socket: null,
     };
   },
   methods: {
@@ -125,11 +124,6 @@ export default {
       .catch((err) => {
         console.log(err);
       });
-  },
-  destroyed() {
-    if (this.socket) {
-      this.socket.disconnect();
-    }
   },
 };
 </script>

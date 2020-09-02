@@ -14,14 +14,12 @@
 <script>
 import AuctionsService from "../service/AuctionsService";
 import MyBidsPreview from "./MyBidsPreview";
-import io from "socket.io-client";
 
 export default {
   name: "CurrentAuctionsComponent",
   components: { MyBidsPreview },
   data() {
     return {
-      socket: null,
       auctions: [],
     };
   },
@@ -30,7 +28,6 @@ export default {
     AuctionsService.getMyBids()
       .then((res) => {
         this.auctions = res;
-        this.socket = io(`https://${window.location.host}`);
       })
       .catch((err) => {
         if (err.response.status === 401) {

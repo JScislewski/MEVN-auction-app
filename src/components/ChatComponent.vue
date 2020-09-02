@@ -35,7 +35,6 @@
 </template>
 
 <script>
-import io from "socket.io-client";
 import ChatService from "../service/ChatService";
 
 export default {
@@ -44,7 +43,6 @@ export default {
     return {
       recipients: [],
       currentRecipient: null,
-      socket: null,
       text: null,
       messages: [],
     };
@@ -59,14 +57,14 @@ export default {
     joinChat(to) {
       this.currentRecipient = to;
       this.getMessages();
-      this.socket.emit("privateChat", {
+      this.$store.state.socket.emit("privateChat", {
         from: this.$store.state.user.username,
         to: to,
       });
     },
     sendMsg() {
       if (this.text.length > 0) {
-        this.socket.emit("privateMsg", {
+        this.$store.state.socket.emit("privateMsg", {
           from: this.$store.state.user.username,
           to: this.currentRecipient,
           msg: this.text,
@@ -91,8 +89,7 @@ export default {
         .then((res) => {
           this.recipients = res;
           console.log(this.$cookies.keys());
-          this.socket = io(`https://${window.location.host}`);
-          this.socket.on("msg", (data) => {
+          this.$store.state.socket.on("msg", (data) => {
             this.messages.push(data);
           });
           if (
@@ -118,9 +115,7 @@ export default {
     }
   },
   destroyed() {
-    if (this.socket) {
-      this.socket.disconnect();
-    }
+    this.$store.state.currentRecipient = null;
   },
 };
 </script>
