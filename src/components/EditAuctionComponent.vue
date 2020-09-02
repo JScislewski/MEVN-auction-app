@@ -14,22 +14,20 @@
     <input
       step="0.01"
       v-model="auction.buyoutPrice"
-      v-if="!auction.ends"
+      v-if="!auction.endsDate"
       type="number"
     />
-    <input
-      step="0.01"
-      v-model="auction.startingBid"
-      v-if="auction.ends"
-      type="number"
-    />
-    <label v-if="auction.ends" for="ends_date">Auction ends:</label>
-    <input
-      id="ends_date"
-      type="date"
-      v-if="auction.ends"
-      v-model="auction.ends"
-    />
+    <label v-if="auction.endsDate" for="ends_date">Auction ends: </label>
+    <div class="date">
+      <input
+        id="ends_date"
+        :min="getFormatedDate()"
+        type="date"
+        v-if="auction.endsDate"
+        v-model="auction.endsDate"
+        v-bind:class="{ err: errors.date }"
+      />
+    </div>
     <button v-on:click="editAuction">SAVE CHANGES</button>
   </div>
 </template>
@@ -47,7 +45,6 @@ export default {
   },
   methods: {
     async editAuction() {
-      this.errors = [];
       if (this.errors.length === 0) {
         console.log("EDIT AUCTION ODPALONE");
         console.log(this.auction);
@@ -65,6 +62,12 @@ export default {
             }
           });
       }
+    },
+    getFormatedDate() {
+      const today = new Date();
+      return `${today.getFullYear()}-${("0" + (today.getMonth() + 1)).slice(
+        -2
+      )}-${("0" + today.getDate()).slice(-2)}`;
     },
   },
   created() {

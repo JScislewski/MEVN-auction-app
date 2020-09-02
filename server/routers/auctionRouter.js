@@ -77,6 +77,27 @@ router.get("/my-auctions", (req, res) => {
       });
   }
 });
+
+router.get("/won-auctions", (req, res) => {
+  if (!req.isAuthenticated()) {
+    res.status(401).json({
+      error: "Unauthorized",
+    });
+  } else {
+    Auction.find({ buyerName: req.user.username })
+      .sort({ startDate: -1 })
+      .exec()
+      .then((result) => {
+        res.status(200).json(result);
+      })
+      .catch((err) => {
+        res.status(500).json({
+          error: err,
+        });
+      });
+  }
+});
+
 router.get("/my-bids", checkAuth, (req, res) => {
   Auction.find({ bidders: req.user.username, isActive: true })
     .exec()
@@ -176,10 +197,13 @@ router.patch("/:auctionId", checkAuth, (req, res) => {
       .then((result) => {
         result.name = auction.name;
         result.description = auction.description;
-        result.buyoutPrice = auction.buyoutPrice;
-        result.startingBid = auction.startingBid;
-        result.highestBid = auction.startingBid;
-        result.ends = auction.ends;
+        if (result.buyoutPrice) {
+          result.buyoutPrice = auction.buyoutPrice;
+        }
+        if (result.endsDate) {
+          result.endsDate = auction.endsDate;
+        }
+
         result
           .save()
           .then(() => {

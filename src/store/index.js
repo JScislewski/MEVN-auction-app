@@ -17,8 +17,8 @@ const store = new Vuex.Store({
     unreadMessagesCount: {},
     unreadMessagesOverall: 0,
     socket: null,
-    //socketURI: "http://localhost:3000",
-    socketURI: `http://${window.location.host}`,
+    socketURI: "https://localhost:3000",
+    //socketURI: `https://${window.location.host}`,
     user: null,
   },
   mutations: {

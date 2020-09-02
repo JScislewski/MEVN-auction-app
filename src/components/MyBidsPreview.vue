@@ -17,7 +17,7 @@
 <script>
 export default {
   name: "MyBidsPreview",
-  props: ["auction", "socket"],
+  props: ["auction"],
   data() {
     return {
       bidPrice: null,

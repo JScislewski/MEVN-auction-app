@@ -45,6 +45,20 @@ class AuctionsService {
         });
     });
   }
+
+  static getWonAuctions() {
+    return new Promise((resolve, reject) => {
+      axios
+        .get(`${url}/won-auctions`, { withCredentials: true })
+        .then((res) => {
+          resolve(res.data);
+        })
+        .catch((err) => {
+          reject(err);
+        });
+    });
+  }
+
   static getMyBids() {
     return new Promise((resolve, reject) => {
       axios

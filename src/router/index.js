@@ -40,6 +40,11 @@ const routes = [
     component: () => import("../views/MyAuctionsView.vue"),
   },
   {
+    path: "/won-auctions",
+    name: "Won auctions",
+    component: () => import("../components/WonAuctionsComponent.vue"),
+  },
+  {
     path: "/my-bids",
     name: "my-bids",
     component: () => import("../views/MyBidsView"),

@@ -20,8 +20,12 @@
       <template v-else>
         <router-link to="/newAuction">NEW AUCTION</router-link>
         <router-link to="/my-auctions">MY AUCTIONS</router-link>
+        <router-link to="/won-auctions">WON AUCTIONS</router-link>
         <router-link to="/my-bids">MY BIDS</router-link>
         <router-link to="/chat">CHAT</router-link>
+        <p class="new_messages" v-if="this.$store.state.unreadMessagesOverall">
+          {{ this.$store.state.unreadMessagesOverall }}
+        </p>
         <a v-on:click="logout()">LOGOUT</a>
       </template>
       <div id="username" v-if="this.$store.state.user !== null">

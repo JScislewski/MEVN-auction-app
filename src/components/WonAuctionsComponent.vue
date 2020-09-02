@@ -1,31 +1,33 @@
 <template>
-  <div>
-    <h1>MY BIDS</h1>
+  <div id="auctions_container">
+    <h3>WON AUCTIONS</h3>
     <div
       class="auctions_container"
       v-for="(auction, idx) in this.auctions"
       :key="idx"
+      :auction="auction"
     >
-      <MyBidsPreview :auction="auction" />
+      <my-auction-preview-component :auction="auction" />
     </div>
+
+    <h5 v-if="auctions.length === 0">No auctions found.</h5>
   </div>
 </template>
 
 <script>
 import AuctionsService from "../service/AuctionsService";
-import MyBidsPreview from "./MyBidsPreview";
+import MyAuctionPreviewComponent from "./MyAuctionPreviewComponent";
 
 export default {
-  name: "MyBidsComponent",
-  components: { MyBidsPreview },
+  name: "WonAuctionsComponent",
+  components: { MyAuctionPreviewComponent },
   data() {
     return {
       auctions: [],
     };
   },
-  methods: {},
   created() {
-    AuctionsService.getMyBids()
+    AuctionsService.getWonAuctions()
       .then((res) => {
         this.auctions = res;
       })
@@ -41,20 +43,7 @@ export default {
 
 <style scoped lang="scss">
 .auctions_container {
-  background-color: #f5f5f5;
   max-width: 400px;
   margin: 0 auto;
-  border-radius: 10px;
-
-  input {
-    width: 100px;
-    position: relative;
-    top: -75px;
-    left: 10px;
-    border-radius: 10px;
-    border: 0;
-    background-color: #dcdee0;
-    padding: 12px;
-  }
 }
 </style>

@@ -40,7 +40,7 @@ app.use(
  */
 const path = require("path");
 const publicDirectoryPath = path.join(__dirname, "../dist");
-app.use(express.static(publicDirectoryPath));
+//app.use(express.static(publicDirectoryPath));
 
 /**
  * -------------- PASSPORT AUTHENTICATION ----------------
@@ -69,8 +69,8 @@ const certificate = fs.readFileSync("./server/https/certificate.pem");
 const credentials = { key: privateKey, cert: certificate };
 const https = require("https");
 const http = require("http");
-//const server = https.createServer(credentials, app);
-const server = http.createServer(app);
+const server = https.createServer(credentials, app);
+//const server = http.createServer(app);
 
 /**
  * -------------- SOCKET.IO ----------------

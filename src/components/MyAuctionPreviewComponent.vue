@@ -18,7 +18,11 @@
         </p>
       </template>
       <template v-else>
-        <p>You can no longer edit this auction.</p>
+        <template
+          v-if="this.auction.buyerName != this.$store.state.user.username"
+        >
+          <p>You can no longer edit this auction.</p>
+        </template>
       </template>
     </div>
 
@@ -84,7 +88,13 @@ export default {
   border-radius: 10px;
   background-color: white;
   padding: 5px 20px;
-  text-align: left;
+  .auction_title {
+    cursor: pointer;
+    margin-bottom: 0;
+  }
+  .auction_seller {
+    margin-top: 5px;
+  }
   .status {
     padding: 5px;
     color: white;
@@ -99,21 +109,15 @@ export default {
   .sold {
     background-color: red;
   }
-  .auction_title {
-    cursor: pointer;
-    margin-bottom: 0;
-  }
-  .auction_seller {
-    margin-top: 5px;
-  }
   .spoiler_bar {
-    grid-template-columns: 250px 50px 50px;
+    grid-template-columns: 250px 100px;
     grid-template-rows: 40px;
     margin-bottom: 10px;
+
     button {
+      width: 10em;
+      padding: 5px;
       margin: 5px;
-      height: 40px;
-      width: 80px;
       cursor: pointer;
       background-color: green;
       border-radius: 10px;
@@ -121,19 +125,6 @@ export default {
       font-weight: bold;
       text-decoration: none;
       border: none;
-    }
-    .button_sm {
-      background-color: darkblue;
-      color: white;
-      margin-top: 20px;
-      border-radius: 7px;
-      font-size: 9px;
-      height: 20px;
-      width: 45px;
-    }
-    .disabled {
-      color: white;
-      background-color: gray;
     }
     h2 {
       line-height: 40px;

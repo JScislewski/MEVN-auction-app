@@ -30,6 +30,20 @@ class ChatService {
         });
     });
   }
+
+  static getUnreadMessagesCount() {
+    return new Promise((resolve, reject) => {
+      axios
+        .get(`${url}/umc`)
+        .then((res) => {
+          console.log(res);
+          resolve(res.data);
+        })
+        .catch((err) => {
+          reject(err);
+        });
+    });
+  }
 }
 
 export default ChatService;
