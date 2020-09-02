@@ -1,16 +1,11 @@
 <template>
   <div class="login_form">
-    <div class="errors_container">
-      <p class="error" v-for="(error, idx) in this.errors" :key="idx">
-        {{ error }}
-      </p>
-    </div>
-
     <label for="usernameInput">Username:</label>
     <input type="text" v-model="username" id="usernameInput" value="username" />
     <label for="password">Password:</label>
     <input type="password" v-model="password" id="password" value="password" />
     <button v-on:click="login">LOGIN</button>
+    <span class="error" v-if="error">{{ error }}</span>
   </div>
 </template>
 
@@ -23,7 +18,7 @@ export default {
     return {
       username: null,
       password: null,
-      errors: [],
+      error: null,
     };
   },
   methods: {
@@ -37,15 +32,17 @@ export default {
           }
         })
         .catch((err) => {
-          console.log(err);
+          if (err.response.status === 401) {
+            this.error = err.response.data.message;
+          }
         });
     },
   },
 };
 </script>
 <style lang="scss">
-.errors_container {
-  margin-bottom: 10px;
+.error {
+  color: #e7485e;
 }
 
 .login_form {

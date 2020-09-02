@@ -11,7 +11,7 @@
     <button v-if="this.page > 1" v-on:click="previousPage()">
       Previous page
     </button>
-    <button v-if="!auctions.length < 3" v-on:click="nextPage()">
+    <button v-if="this.auctions.length == 3" v-on:click="nextPage()">
       Next page
     </button>
     <h2>Page:{{ this.page }}</h2>

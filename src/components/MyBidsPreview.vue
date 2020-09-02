@@ -6,6 +6,9 @@
       <span class="status sold" v-else>sold</span>
     </h3>
     <h5 class="auction_seller">seller: {{ auction.sellerName }}</h5>
+    <h5 class="auction_highest_bidder">
+      highest bidder: {{ auction.highestBidder }}
+    </h5>
     <div class="spoiler_bar">
       <h2>{{ auction.highestBid }}zł</h2>
       <input v-model="bidPrice" type="number" step="0.01" />

@@ -38,18 +38,22 @@
       <p v-if="auctionType === 'Buyout'">Buyout price:</p>
       <p v-if="auctionType === 'Bid'">Starting bid:</p>
     </label>
-    <input
-      step="0.01"
-      v-model="buyoutPrice"
-      v-if="auctionType === 'Buyout'"
-      type="number"
-    />
-    <input
-      step="0.01"
-      v-model="startingBid"
-      v-if="auctionType === 'Bid'"
-      type="number"
-    />
+    <p>
+      <input
+        step="0.01"
+        v-model="buyoutPrice"
+        v-if="auctionType === 'Buyout'"
+        type="number"
+      />
+    </p>
+    <p>
+      <input
+        step="0.01"
+        v-model="startingBid"
+        v-if="auctionType === 'Bid'"
+        type="number"
+      />
+    </p>
     <label v-if="auctionType === 'Bid'" for="ends_date">Auction ends: </label>
     <div class="date">
       <input
