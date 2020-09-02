@@ -83,18 +83,11 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.errors_container {
-  margin-bottom: 10px;
-}
-
 .auction_form {
-  h4 {
-    margin-left: 30px;
-  }
-
+  color: black;
   text-align: left;
   margin: 20px auto 0 auto;
-  max-width: 400px;
+  max-width: 300px;
   display: flex;
   flex-direction: column;
   font-size: 16px;
@@ -102,15 +95,15 @@ export default {
   button,
   input,
   textarea {
+    color: black;
     padding: 10px;
     border-radius: 10px;
     margin: 20px;
   }
 
   button {
-    min-height: 40px;
     cursor: pointer;
-    background-color: green;
+    background-color: #48a9a6;
     color: white;
     font-weight: bold;
     text-decoration: none;
@@ -123,29 +116,13 @@ export default {
     font-weight: bold;
   }
 
-  input,
-  textarea {
-    border: 2px solid black;
+  input {
     text-align: left;
-    background-color: white;
+    border: 2px solid black;
   }
 
-  textarea {
-    resize: none;
-    height: 150px;
-  }
-
-  input:focus,
-  textarea:focus {
-    background-color: greenyellow;
-  }
-
-  .radio_label {
-    height: 35px;
-  }
-
-  .price_label {
-    margin-top: 20px;
+  input:focus {
+    background-color: #c9b0d4;
   }
 
   .error {

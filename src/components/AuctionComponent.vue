@@ -17,6 +17,7 @@
         </template>
         <template v-else>
           <h5 class="auction_ends">Ends: {{ getEndsTime() }}</h5>
+          <h3>Highest bidder: {{ auction.highestBidder }}</h3>
           <h2>{{ auction.highestBid }} zł</h2>
           <input v-model="bidPrice" type="number" step="1" />
           <button v-on:click="bid">Bid</button>
@@ -118,6 +119,7 @@ export default {
           });
           this.$store.state.socket.on("bid", (data) => {
             this.auction.highestBid = data.highestBid;
+            this.auction.highestBidder = data.highestBidder;
           });
         }
       })

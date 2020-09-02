@@ -76,7 +76,7 @@ export default {
       padding: 5px;
       margin: 5px;
       cursor: pointer;
-      background-color: green;
+      background-color: #8c6a40;
       border-radius: 10px;
       color: white;
       font-weight: bold;

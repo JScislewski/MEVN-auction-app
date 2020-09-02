@@ -52,6 +52,7 @@ export default {
     });
     this.$store.state.socket.on("bid", (data) => {
       if (this.$props.auction._id === data._id) {
+        this.$props.auction.highestBidder = data.highestBidder;
         this.$props.auction.highestBid = data.highestBid;
       }
     });
@@ -107,7 +108,7 @@ export default {
       padding: 5px;
       margin: 5px;
       cursor: pointer;
-      background-color: green;
+      background-color: #8c6a40;
       border-radius: 10px;
       color: white;
       font-weight: bold;

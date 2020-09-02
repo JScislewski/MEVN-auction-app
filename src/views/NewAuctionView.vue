@@ -1,59 +1,50 @@
 <template>
   <div class="auction_form">
-    <div class="errors_container">
-      <p class="error" v-for="(error, idx) in this.errors" :key="idx">
-        {{ error }}
-      </p>
-    </div>
+    <label for="title">Title:</label>
+    <input type="text" v-model="name" id="title" />
 
-    <p><label for="title">Title:</label></p>
-    <p><input type="text" v-model="name" id="title" /></p>
+    <label for="description">Description:</label>
 
-    <p>
-      <label for="description">Description:</label>
-    </p>
-    <p><textarea v-model="description" id="description" /></p>
-    <p>
-      <label>Auction type:</label>
-    </p>
-    <p>
-      <label class="radio_label">
-        <input
-          v-model="auctionType"
-          type="radio"
-          name="auction_type"
-          value="Buyout"
-        />Buyout</label
-      >
-      <label class="radio_label">
-        <input
-          v-model="auctionType"
-          type="radio"
-          name="auction_type"
-          value="Bid"
-        />Bid</label
-      >
-    </p>
+    <textarea v-model="description" id="description" />
+
+    <label>Auction type:</label>
+
+    <label class="radio_label">
+      <input
+        v-model="auctionType"
+        type="radio"
+        name="auction_type"
+        value="Buyout"
+      />Buyout</label
+    >
+    <label class="radio_label">
+      <input
+        v-model="auctionType"
+        type="radio"
+        name="auction_type"
+        value="Bid"
+      />Bid</label
+    >
+
     <label v-if="auctionType" class="price_label">
-      <p v-if="auctionType === 'Buyout'">Buyout price:</p>
-      <p v-if="auctionType === 'Bid'">Starting bid:</p>
+      <span v-if="auctionType === 'Buyout'">Buyout price:</span>
+      <span v-if="auctionType === 'Bid'">Starting bid:</span>
     </label>
-    <p>
-      <input
-        step="0.01"
-        v-model="buyoutPrice"
-        v-if="auctionType === 'Buyout'"
-        type="number"
-      />
-    </p>
-    <p>
-      <input
-        step="0.01"
-        v-model="startingBid"
-        v-if="auctionType === 'Bid'"
-        type="number"
-      />
-    </p>
+
+    <input
+      step="0.01"
+      v-model="buyoutPrice"
+      v-if="auctionType === 'Buyout'"
+      type="number"
+    />
+
+    <input
+      step="0.01"
+      v-model="startingBid"
+      v-if="auctionType === 'Bid'"
+      type="number"
+    />
+
     <label v-if="auctionType === 'Bid'" for="ends_date">Auction ends: </label>
     <div class="date">
       <input
@@ -73,6 +64,11 @@
       />
     </div>
     <button v-on:click="createAuction">CREATE</button>
+    <div class="errors_container">
+      <span class="error" v-for="(error, idx) in this.errors" :key="idx">
+        {{ error }}
+      </span>
+    </div>
   </div>
 </template>
 
@@ -138,4 +134,56 @@ export default {
 };
 </script>
 
-<style lang="scss"></style>
+<style scoped lang="scss">
+.auction_form {
+  color: black;
+  text-align: left;
+  margin: 20px auto 0 auto;
+  max-width: 300px;
+  display: flex;
+  flex-direction: column;
+  font-size: 16px;
+
+  button,
+  input,
+  textarea {
+    color: black;
+    padding: 10px;
+    border-radius: 10px;
+    margin: 20px;
+  }
+
+  button {
+    cursor: pointer;
+    background-color: #48a9a6;
+    color: white;
+    font-weight: bold;
+    text-decoration: none;
+    border: none;
+  }
+
+  label {
+    margin-top: 10px;
+    margin-left: 30px;
+    font-weight: bold;
+  }
+
+  input {
+    text-align: left;
+    border: 2px solid black;
+  }
+
+  input:focus {
+    background-color: #c9b0d4;
+  }
+
+  .error {
+    padding: 10px;
+    border-radius: 25px;
+    margin: 10px 20px;
+    color: white;
+    background-color: #c03546;
+    font-size: 13px;
+  }
+}
+</style>

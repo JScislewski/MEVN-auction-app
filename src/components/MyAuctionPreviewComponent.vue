@@ -13,8 +13,10 @@
         "
       >
         <p>
-          <button v-on:click="editAuction" class="button_sm">edit</button>
-          <button v-on:click="deleteAuction" class="button_sm">delete</button>
+          <button v-on:click="editAuction" class="button_edit">edit</button>
+          <button v-on:click="deleteAuction" class="button_delete">
+            delete
+          </button>
         </p>
       </template>
       <template v-else>
@@ -36,7 +38,7 @@
     <div class="spoiler_bar">
       <h2 v-if="auction.buyoutPrice">{{ auction.buyoutPrice }} zł</h2>
       <h2 v-if="auction.highestBid">{{ auction.highestBid }} zł</h2>
-      <button v-on:click="getAuction">View</button>
+      <button class="button_submit" v-on:click="getAuction">View</button>
     </div>
   </div>
 </template>
@@ -103,6 +105,13 @@ export default {
     font-size: 12px;
     font-weight: normal;
   }
+  .button_delete {
+    background-color: #50325d;
+  }
+  .button_edit,
+  .button_submit {
+    background-color: #ad8350;
+  }
   .sale {
     background-color: green;
   }
@@ -119,7 +128,6 @@ export default {
       padding: 5px;
       margin: 5px;
       cursor: pointer;
-      background-color: green;
       border-radius: 10px;
       color: white;
       font-weight: bold;

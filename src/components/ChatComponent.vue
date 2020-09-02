@@ -90,6 +90,7 @@ export default {
     },
   },
   created() {
+    this.$store.state.newMessage = false;
     if (this.$store.state.user !== null) {
       ChatService.getRecipients(this.$store.state.user.username)
         .then((res) => {

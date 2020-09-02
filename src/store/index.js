@@ -2,6 +2,7 @@ import Vue from "vue";
 import Vuex from "vuex";
 import io from "socket.io-client";
 import createPersistedState from "vuex-persistedstate";
+import router from "../router/index";
 
 Vue.use(Vuex);
 
@@ -13,26 +14,24 @@ const store = new Vuex.Store({
     }),
   ],
   state: {
-    currentRecipient: null,
-    unreadMessagesCount: {},
-    unreadMessagesOverall: 0,
+    newMessage: false,
     socket: null,
     socketURI: "https://localhost:3000",
     //socketURI: `https://${window.location.host}`,
     user: null,
   },
   mutations: {
-    resetNewMsgs(state) {
-      console.log("SEEN!");
-      state.newMsgsCount = 0;
-      state.newMsgs = {};
-    },
     login(state, user) {
       state.socket = io(state.socketURI);
       state.socket.emit("notify", user.username);
       state.user = user;
-      console.log(state.unreadMessagesCount);
-      console.log(state.unreadMessagesOverall);
+
+      state.socket.on("msgNotify", () => {
+        if (router.currentRoute.name !== "chat") {
+          state.newMessage = true;
+        }
+        console.log("NEW MESSAGE");
+      });
     },
     logout(state) {
       if (state.socket) {

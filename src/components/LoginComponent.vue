@@ -40,11 +40,7 @@ export default {
   },
 };
 </script>
-<style lang="scss">
-.error {
-  color: #e7485e;
-}
-
+<style scoped lang="scss">
 .login_form {
   color: black;
   text-align: left;
@@ -65,7 +61,7 @@ export default {
 
   button {
     cursor: pointer;
-    background-color: green;
+    background-color: #48a9a6;
     color: white;
     font-weight: bold;
     text-decoration: none;
@@ -84,7 +80,7 @@ export default {
   }
 
   input:focus {
-    background-color: greenyellow;
+    background-color: #c9b0d4;
   }
 
   .error {

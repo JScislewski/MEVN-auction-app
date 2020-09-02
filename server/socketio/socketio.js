@@ -71,11 +71,14 @@ const bid = (data, io) => {
 module.exports = (io) => {
   io.on("connection", (socket) => {
     console.log("user connected!");
+
+    socket.on("notify", (username) => {
+      socket["username"] = username;
+      socket.join(username);
+    });
+
     socket.on("privateChat", (data) => {
       console.log(`${data.from} joined private chat with ${data.to}`);
-      for (let i = 1; i < Object.keys(socket.rooms).length; i++) {
-        socket.leave(socket.rooms[Object.keys(socket.rooms)[i]]);
-      }
       socket.join([data.from, data.to].sort().join(""));
     });
     socket.on("privateMsg", (data) => {
@@ -90,6 +93,8 @@ module.exports = (io) => {
         .save()
         .then((result) => {
           console.log(result);
+          io.sockets.in(result.to).emit("msgNotify");
+          console.log("EMITING NEW MESSAGE TO:", result.to);
           io.sockets
             .in([result.from, result.to].sort().join(""))
             .emit("msg", result);
@@ -99,9 +104,6 @@ module.exports = (io) => {
         });
     });
     socket.on("joinLiveBid", (data) => {
-      for (let i = 1; i < Object.keys(socket.rooms).length; i++) {
-        socket.leave(socket.rooms[Object.keys(socket.rooms)[i]]);
-      }
       socket.join(data.auctionId);
     });
     socket.on("watchLiveBid", (data) => {

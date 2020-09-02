@@ -23,9 +23,9 @@
         <router-link to="/won-auctions">WON AUCTIONS</router-link>
         <router-link to="/my-bids">MY BIDS</router-link>
         <router-link to="/chat">CHAT</router-link>
-        <p class="new_messages" v-if="this.$store.state.unreadMessagesOverall">
-          {{ this.$store.state.unreadMessagesOverall }}
-        </p>
+        <span class="new_message_alert" v-if="this.$store.state.newMessage">
+          NEW MSG!
+        </span>
         <a v-on:click="logout()">LOGOUT</a>
       </template>
       <div id="username" v-if="this.$store.state.user !== null">
@@ -59,10 +59,13 @@ body {
   font-family: "segoe ui";
 }
 
+.new_message_alert {
+  color: #664176;
+}
 .nav {
   height: 50px;
   width: 100%;
-  background-color: green;
+  background-color: #48a9a6;
   position: relative;
 }
 
@@ -73,7 +76,7 @@ body {
 .nav > .nav-header > .nav-title {
   display: inline-block;
   font-size: 22px;
-  color: #fff;
+  color: #2e3738;
   padding: 10px 10px 10px 10px;
 }
 
@@ -92,7 +95,7 @@ body {
   display: inline-block;
   padding: 13px 10px 13px 10px;
   text-decoration: none;
-  color: #efefef;
+  color: #2e3738;
 }
 
 .nav > .nav-links > a:hover {
@@ -130,7 +133,7 @@ body {
     position: absolute;
     display: block;
     width: 100%;
-    background-color: #333;
+    background-color: #2e3738;
     height: 0px;
     transition: all 0.3s ease-in;
     overflow-y: hidden;
@@ -150,6 +153,6 @@ body {
   }
 }
 a.router-link-exact-active {
-  background-color: darkgreen;
+  background-color: #ad8350;
 }
 </style>
